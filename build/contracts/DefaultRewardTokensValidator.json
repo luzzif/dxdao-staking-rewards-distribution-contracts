@@ -1,0 +1,2811 @@
+{
+  "contractName": "DefaultRewardTokensValidator",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_dxTokenRegistryAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_dxTokenRegistryListId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "interfaceId",
+          "type": "bytes4"
+        }
+      ],
+      "name": "supportsInterface",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_dxTokenRegistryAddress",
+          "type": "address"
+        }
+      ],
+      "name": "setDxTokenRegistry",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_dxTokenRegistryListId",
+          "type": "uint256"
+        }
+      ],
+      "name": "setDxTokenRegistryListId",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "_rewardTokens",
+          "type": "address[]"
+        }
+      ],
+      "name": "areRewardTokensValid",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_dxTokenRegistryAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_dxTokenRegistryListId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"_rewardTokens\",\"type\":\"address[]\"}],\"name\":\"areRewardTokensValid\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_dxTokenRegistryAddress\",\"type\":\"address\"}],\"name\":\"setDxTokenRegistry\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_dxTokenRegistryListId\",\"type\":\"uint256\"}],\"name\":\"setDxTokenRegistryListId\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"supportsInterface(bytes4)\":{\"details\":\"See {IERC165-supportsInterface}. Time complexity O(1), guaranteed to always use less than 30 000 gas.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/home/luzzif/Projects/swapr-erc20-staking-rewards-factory/contracts/validators/DefaultRewardTokensValidator.sol\":\"DefaultRewardTokensValidator\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/luzzif/Projects/swapr-erc20-staking-rewards-factory/contracts/abstraction/IRewardTokensValidator.sol\":{\"keccak256\":\"0xeab2fc343bfb6c925c27debf1d06def3584daa674ac8b01fdb4a3fbb15f53167\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://26820681eb188e632bd8f7836b456fd3806ea6b52b9f002217008cdd8747522d\",\"dweb:/ipfs/QmYnBDC5ZdombZEY6Bb54CBdqzuaic6oFDKb18vU4t2mJv\"]},\"/home/luzzif/Projects/swapr-erc20-staking-rewards-factory/contracts/validators/DefaultRewardTokensValidator.sol\":{\"keccak256\":\"0x8b7d965fd46c4464aad5442191a627c5ca1fb6b2e4a36f1d8847cfb33bec01f7\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://5ea25dbe955b4f054e57c101bbe15c7a626cb8a9d12632b17b84c226abeaa960\",\"dweb:/ipfs/QmRsZHDpgvdfWqyw9M9WqMPxQbeD6rtEkCNnXCBxFpQSmi\"]},\"@openzeppelin/contracts/GSN/Context.sol\":{\"keccak256\":\"0x8d3cb350f04ff49cfb10aef08d87f19dcbaecc8027b0bed12f3275cd12f38cf0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ded47ec7c96750f9bd04bbbc84f659992d4ba901cb7b532a52cd468272cf378f\",\"dweb:/ipfs/QmfBrGtQP7rZEqEg6Wz6jh2N2Kukpj1z5v3CGWmAqrzm96\"]},\"@openzeppelin/contracts/access/Ownable.sol\":{\"keccak256\":\"0xf7c39c7e6d06ed3bda90cfefbcbf2ddc32c599c3d6721746546ad64946efccaa\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cb57a28e189cd8b05748db44bdd51d608e6f1364dd1b35ad921e1bc82c10631e\",\"dweb:/ipfs/QmaWWTBbVu2pRR9XUbE4iC159NoP59cRF9ZJwhf4ghFN9i\"]},\"@openzeppelin/contracts/introspection/ERC165.sol\":{\"keccak256\":\"0xd6b90e604fb2eb2d641c7110c72440bf2dc999ec6ab8ff60f200e71ca75d1d90\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7b92d8ab83b21ff984b1f0d6d66897d5afb1f2052004cbcb133cea023e0ae468\",\"dweb:/ipfs/QmTarypkQrFp4UMjTh7Zzhz2nZLz5uPS4nJQtHDEuwBVe6\"]},\"@openzeppelin/contracts/introspection/IERC165.sol\":{\"keccak256\":\"0xf70bc25d981e4ec9673a995ad2995d5d493ea188d3d8f388bba9c227ce09fb82\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bd970f51e3a77790c2f02b5b1759827c3b897c3d98c407b3631e8af32e3dc93c\",\"dweb:/ipfs/QmPF85Amgbqjk3SNZKsPCsqCw8JfwYEPMnnhvMJUyX58je\"]},\"@openzeppelin/contracts/math/SafeMath.sol\":{\"keccak256\":\"0x3b21f2c8d626de3b9925ae33e972d8bf5c8b1bffb3f4ee94daeed7d0679036e6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7f8d45329fecbf0836ad7543330c3ecd0f8d0ffa42d4016278c3eb2215fdcdfe\",\"dweb:/ipfs/QmXWLT7GcnHtA5NiD6MFi2CV3EWJY4wv5mLNnypqYDrxL3\"]},\"@openzeppelin/contracts/token/ERC20/ERC20.sol\":{\"keccak256\":\"0xcbd85c86627a47fd939f1f4ee3ba626575ff2a182e1804b29f5136394449b538\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://53c6a80c519bb9356aad28efa9a1ec31603860eb759d2dc57f545fcae1dd1aca\",\"dweb:/ipfs/QmfRS6TtMNUHhvgLHXK21qKNnpn2S7g2Yd1fKaHKyFiJsR\"]},\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x5f02220344881ce43204ae4a6281145a67bc52c2bb1290a791857df3d19d78f5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://24427744bd3e6cb73c17010119af12a318289c0253a4d9acb8576c9fb3797b08\",\"dweb:/ipfs/QmTLDqpKRBuxGxRAmjgXt9AkXyACW3MtKzi7PYjm5iMfGC\"]},\"dxdao-token-registry/contracts/dxTokenRegistry.sol\":{\"keccak256\":\"0xba0b68b003dbae7bb4d71eb9b8ba880ef56b1c64c17fb9c1371e12bbed524bd9\",\"urls\":[\"bzz-raw://d39c040e7aebe66f71a15ebcb0f0f8fae124f481074a1385adcc8d9a63ce8a1c\",\"dweb:/ipfs/QmRdsaypRiPwgJmhjN4NqVCKMETiaJdLLmKGhThVPeRGbd\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506040516107283803806107288339818101604052604081101561003357600080fd5b50805160209091015161004c6301ffc9a760e01b6100db565b600061005661015f565b600180546001600160a01b0319166001600160a01b038316908117909155604051919250906000907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a350600280546001600160a01b0319166001600160a01b03841617905560038190556100d46369b034d360e01b6100db565b5050610163565b6001600160e01b0319808216141561013a576040805162461bcd60e51b815260206004820152601c60248201527f4552433136353a20696e76616c696420696e7465726661636520696400000000604482015290519081900360640190fd5b6001600160e01b0319166000908152602081905260409020805460ff19166001179055565b3390565b6105b6806101726000396000f3fe608060405234801561001057600080fd5b506004361061007d5760003560e01c80637ea540501161005b5780637ea54050146101375780638da5cb5b1461015d5780639189c0f214610181578063f2fde38b1461019e5761007d565b806301ffc9a71461008257806369b034d3146100bd578063715018a61461012d575b600080fd5b6100a96004803603602081101561009857600080fd5b50356001600160e01b0319166101c4565b604080519115158252519081900360200190f35b6100a9600480360360208110156100d357600080fd5b8101906020810181356401000000008111156100ee57600080fd5b82018360208201111561010057600080fd5b8035906020019184602083028401116401000000008311171561012257600080fd5b5090925090506101e3565b6101356102b5565b005b6101356004803603602081101561014d57600080fd5b50356001600160a01b0316610357565b6101656103d1565b604080516001600160a01b039092168252519081900360200190f35b6101356004803603602081101561019757600080fd5b50356103e0565b610135600480360360208110156101b457600080fd5b50356001600160a01b031661043d565b6001600160e01b03191660009081526020819052604090205460ff1690565b6000805b828110156102a9576002546003546001600160a01b039091169063dd88adde9086868581811061021357fe5b905060200201356001600160a01b03166040518363ffffffff1660e01b815260040180838152602001826001600160a01b031681526020019250505060206040518083038186803b15801561026757600080fd5b505afa15801561027b573d6000803e3d6000fd5b505050506040513d602081101561029157600080fd5b50516102a15760009150506102af565b6001016101e7565b50600190505b92915050565b6102bd610536565b6001546001600160a01b0390811691161461030d576040805162461bcd60e51b81526020600482018190526024820152600080516020610561833981519152604482015290519081900360640190fd5b6001546040516000916001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600180546001600160a01b0319169055565b61035f610536565b6001546001600160a01b039081169116146103af576040805162461bcd60e51b81526020600482018190526024820152600080516020610561833981519152604482015290519081900360640190fd5b600280546001600160a01b0319166001600160a01b0392909216919091179055565b6001546001600160a01b031690565b6103e8610536565b6001546001600160a01b03908116911614610438576040805162461bcd60e51b81526020600482018190526024820152600080516020610561833981519152604482015290519081900360640190fd5b600355565b610445610536565b6001546001600160a01b03908116911614610495576040805162461bcd60e51b81526020600482018190526024820152600080516020610561833981519152604482015290519081900360640190fd5b6001600160a01b0381166104da5760405162461bcd60e51b815260040180806020018281038252602681526020018061053b6026913960400191505060405180910390fd5b6001546040516001600160a01b038084169216907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3600180546001600160a01b0319166001600160a01b0392909216919091179055565b339056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573734f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572a2646970667358221220d1e8f55c6a9402b93b53177b2eed37c13c117f3c945f7bcec8e743d1b2df403464736f6c634300060c0033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061007d5760003560e01c80637ea540501161005b5780637ea54050146101375780638da5cb5b1461015d5780639189c0f214610181578063f2fde38b1461019e5761007d565b806301ffc9a71461008257806369b034d3146100bd578063715018a61461012d575b600080fd5b6100a96004803603602081101561009857600080fd5b50356001600160e01b0319166101c4565b604080519115158252519081900360200190f35b6100a9600480360360208110156100d357600080fd5b8101906020810181356401000000008111156100ee57600080fd5b82018360208201111561010057600080fd5b8035906020019184602083028401116401000000008311171561012257600080fd5b5090925090506101e3565b6101356102b5565b005b6101356004803603602081101561014d57600080fd5b50356001600160a01b0316610357565b6101656103d1565b604080516001600160a01b039092168252519081900360200190f35b6101356004803603602081101561019757600080fd5b50356103e0565b610135600480360360208110156101b457600080fd5b50356001600160a01b031661043d565b6001600160e01b03191660009081526020819052604090205460ff1690565b6000805b828110156102a9576002546003546001600160a01b039091169063dd88adde9086868581811061021357fe5b905060200201356001600160a01b03166040518363ffffffff1660e01b815260040180838152602001826001600160a01b031681526020019250505060206040518083038186803b15801561026757600080fd5b505afa15801561027b573d6000803e3d6000fd5b505050506040513d602081101561029157600080fd5b50516102a15760009150506102af565b6001016101e7565b50600190505b92915050565b6102bd610536565b6001546001600160a01b0390811691161461030d576040805162461bcd60e51b81526020600482018190526024820152600080516020610561833981519152604482015290519081900360640190fd5b6001546040516000916001600160a01b0316907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908390a3600180546001600160a01b0319169055565b61035f610536565b6001546001600160a01b039081169116146103af576040805162461bcd60e51b81526020600482018190526024820152600080516020610561833981519152604482015290519081900360640190fd5b600280546001600160a01b0319166001600160a01b0392909216919091179055565b6001546001600160a01b031690565b6103e8610536565b6001546001600160a01b03908116911614610438576040805162461bcd60e51b81526020600482018190526024820152600080516020610561833981519152604482015290519081900360640190fd5b600355565b610445610536565b6001546001600160a01b03908116911614610495576040805162461bcd60e51b81526020600482018190526024820152600080516020610561833981519152604482015290519081900360640190fd5b6001600160a01b0381166104da5760405162461bcd60e51b815260040180806020018281038252602681526020018061053b6026913960400191505060405180910390fd5b6001546040516001600160a01b038084169216907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e090600090a3600180546001600160a01b0319166001600160a01b0392909216919091179055565b339056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f20616464726573734f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572a2646970667358221220d1e8f55c6a9402b93b53177b2eed37c13c117f3c945f7bcec8e743d1b2df403464736f6c634300060c0033",
+  "immutableReferences": {},
+  "sourceMap": "230:1257:3:-:0;;;382:291;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;382:291:3;;;;;;;768:40:7;-1:-1:-1;;;768:18:7;:40::i;:::-;882:17:6;902:12;:10;:12::i;:::-;924:6;:18;;-1:-1:-1;;;;;;924:18:6;-1:-1:-1;;;;;924:18:6;;;;;;;;957:43;;924:18;;-1:-1:-1;924:18:6;-1:-1:-1;;957:43:6;;-1:-1:-1;;957:43:6;-1:-1:-1;488:15:3;:58;;-1:-1:-1;;;;;;488:58:3;-1:-1:-1;;;;;488:58:3;;;;;556:21;:46;;;612:54;-1:-1:-1;;;612:18:3;:54::i;:::-;382:291;;230:1257;;1499:198:7;-1:-1:-1;;;;;;1582:25:7;;;;;1574:66;;;;;-1:-1:-1;;;1574:66:7;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;;1650:33:7;:20;:33;;;;;;;;;;:40;;-1:-1:-1;;1650:40:7;1686:4;1650:40;;;1499:198::o;598:104:5:-;685:10;598:104;:::o;230:1257:3:-;;;;;;;",
+  "deployedSourceMap": "230:1257:3:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;965:140:7;;;;;;;;;;;;;;;;-1:-1:-1;965:140:7;-1:-1:-1;;;;;;965:140:7;;:::i;:::-;;;;;;;;;;;;;;;;;;1034:451:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;1034:451:3;;-1:-1:-1;1034:451:3;-1:-1:-1;1034:451:3;:::i;1706:145:6:-;;;:::i;:::-;;679:175:3;;;;;;;;;;;;;;;;-1:-1:-1;679:175:3;-1:-1:-1;;;;;679:175:3;;:::i;1083:77:6:-;;;:::i;:::-;;;;-1:-1:-1;;;;;1083:77:6;;;;;;;;;;;;;;860:168:3;;;;;;;;;;;;;;;;-1:-1:-1;860:168:3;;:::i;2000:240:6:-;;;;;;;;;;;;;;;;-1:-1:-1;2000:240:6;-1:-1:-1;;;;;2000:240:6;;:::i;965:140:7:-;-1:-1:-1;;;;;;1065:33:7;1042:4;1065:33;;;;;;;;;;;;;;965:140::o;1034:451:3:-;1149:4;;1169:289;1190:25;;;1169:289;;;1259:15;;1310:21;;-1:-1:-1;;;;;1259:15:3;;;;:29;;1353:13;;1367:2;1353:17;;;;;;;;;;;;;-1:-1:-1;;;;;1353:17:3;1259:129;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;1259:129:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;1259:129:3;1237:211;;1428:5;1421:12;;;;;1237:211;1217:4;;1169:289;;;;1474:4;1467:11;;1034:451;;;;;:::o;1706:145:6:-;1297:12;:10;:12::i;:::-;1287:6;;-1:-1:-1;;;;;1287:6:6;;;:22;;;1279:67;;;;;-1:-1:-1;;;1279:67:6;;;;;;;;;;;;;-1:-1:-1;;;;;;;;;;;1279:67:6;;;;;;;;;;;;;;;1796:6:::1;::::0;1775:40:::1;::::0;1812:1:::1;::::0;-1:-1:-1;;;;;1796:6:6::1;::::0;1775:40:::1;::::0;1812:1;;1775:40:::1;1825:6;:19:::0;;-1:-1:-1;;;;;;1825:19:6::1;::::0;;1706:145::o;679:175:3:-;1297:12:6;:10;:12::i;:::-;1287:6;;-1:-1:-1;;;;;1287:6:6;;;:22;;;1279:67;;;;;-1:-1:-1;;;1279:67:6;;;;;;;;;;;;;-1:-1:-1;;;;;;;;;;;1279:67:6;;;;;;;;;;;;;;;789:15:3::1;:58:::0;;-1:-1:-1;;;;;;789:58:3::1;-1:-1:-1::0;;;;;789:58:3;;;::::1;::::0;;;::::1;::::0;;679:175::o;1083:77:6:-;1147:6;;-1:-1:-1;;;;;1147:6:6;1083:77;:::o;860:168:3:-;1297:12:6;:10;:12::i;:::-;1287:6;;-1:-1:-1;;;;;1287:6:6;;;:22;;;1279:67;;;;;-1:-1:-1;;;1279:67:6;;;;;;;;;;;;;-1:-1:-1;;;;;;;;;;;1279:67:6;;;;;;;;;;;;;;;975:21:3::1;:46:::0;860:168::o;2000:240:6:-;1297:12;:10;:12::i;:::-;1287:6;;-1:-1:-1;;;;;1287:6:6;;;:22;;;1279:67;;;;;-1:-1:-1;;;1279:67:6;;;;;;;;;;;;;-1:-1:-1;;;;;;;;;;;1279:67:6;;;;;;;;;;;;;;;-1:-1:-1;;;;;2088:22:6;::::1;2080:73;;;;-1:-1:-1::0;;;2080:73:6::1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2189:6;::::0;2168:38:::1;::::0;-1:-1:-1;;;;;2168:38:6;;::::1;::::0;2189:6:::1;::::0;2168:38:::1;::::0;2189:6:::1;::::0;2168:38:::1;2216:6;:17:::0;;-1:-1:-1;;;;;;2216:17:6::1;-1:-1:-1::0;;;;;2216:17:6;;;::::1;::::0;;;::::1;::::0;;2000:240::o;598:104:5:-;685:10;598:104;:::o",
+  "source": "// SPDX-License-Identifier: GPL-3.0\n\npragma solidity ^0.6.12;\n\nimport \"@openzeppelin/contracts/access/Ownable.sol\";\nimport \"../abstraction/IRewardTokensValidator.sol\";\nimport \"dxdao-token-registry/contracts/dxTokenRegistry.sol\";\n\ncontract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {\n    DXTokenRegistry dxTokenRegistry;\n    uint256 dxTokenRegistryListId;\n\n    constructor(address _dxTokenRegistryAddress, uint256 _dxTokenRegistryListId)\n        public\n    {\n        dxTokenRegistry = DXTokenRegistry(_dxTokenRegistryAddress);\n        dxTokenRegistryListId = _dxTokenRegistryListId;\n        _registerInterface(this.areRewardTokensValid.selector);\n    }\n\n    function setDxTokenRegistry(address _dxTokenRegistryAddress)\n        external\n        onlyOwner\n    {\n        dxTokenRegistry = DXTokenRegistry(_dxTokenRegistryAddress);\n    }\n\n    function setDxTokenRegistryListId(uint256 _dxTokenRegistryListId)\n        external\n        onlyOwner\n    {\n        dxTokenRegistryListId = _dxTokenRegistryListId;\n    }\n\n    function areRewardTokensValid(address[] calldata _rewardTokens)\n        external\n        override\n        returns (bool)\n    {\n        for (uint256 _i = 0; _i < _rewardTokens.length; _i++) {\n            if (\n                !dxTokenRegistry.isTokenActive(\n                    dxTokenRegistryListId,\n                    _rewardTokens[_i]\n                )\n            ) {\n                return false;\n            }\n        }\n        return true;\n    }\n}\n",
+  "sourcePath": "/home/luzzif/Projects/swapr-erc20-staking-rewards-factory/contracts/validators/DefaultRewardTokensValidator.sol",
+  "ast": {
+    "absolutePath": "/home/luzzif/Projects/swapr-erc20-staking-rewards-factory/contracts/validators/DefaultRewardTokensValidator.sol",
+    "exportedSymbols": {
+      "DefaultRewardTokensValidator": [
+        238
+      ]
+    },
+    "id": 239,
+    "license": "GPL-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 139,
+        "literals": [
+          "solidity",
+          "^",
+          "0.6",
+          ".12"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "37:24:3"
+      },
+      {
+        "absolutePath": "@openzeppelin/contracts/access/Ownable.sol",
+        "file": "@openzeppelin/contracts/access/Ownable.sol",
+        "id": 140,
+        "nodeType": "ImportDirective",
+        "scope": 239,
+        "sourceUnit": 530,
+        "src": "63:52:3",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/home/luzzif/Projects/swapr-erc20-staking-rewards-factory/contracts/abstraction/IRewardTokensValidator.sol",
+        "file": "../abstraction/IRewardTokensValidator.sol",
+        "id": 141,
+        "nodeType": "ImportDirective",
+        "scope": 239,
+        "sourceUnit": 124,
+        "src": "116:51:3",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "dxdao-token-registry/contracts/dxTokenRegistry.sol",
+        "file": "dxdao-token-registry/contracts/dxTokenRegistry.sol",
+        "id": 142,
+        "nodeType": "ImportDirective",
+        "scope": 239,
+        "sourceUnit": 2703,
+        "src": "168:60:3",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 143,
+              "name": "IRewardTokensValidator",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 123,
+              "src": "271:22:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_IRewardTokensValidator_$123",
+                "typeString": "contract IRewardTokensValidator"
+              }
+            },
+            "id": 144,
+            "nodeType": "InheritanceSpecifier",
+            "src": "271:22:3"
+          },
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 145,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 529,
+              "src": "295:7:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$529",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 146,
+            "nodeType": "InheritanceSpecifier",
+            "src": "295:7:3"
+          }
+        ],
+        "contractDependencies": [
+          123,
+          420,
+          529,
+          586,
+          770
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 238,
+        "linearizedBaseContracts": [
+          238,
+          529,
+          420,
+          123,
+          586,
+          770
+        ],
+        "name": "DefaultRewardTokensValidator",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 148,
+            "mutability": "mutable",
+            "name": "dxTokenRegistry",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 238,
+            "src": "309:31:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_DXTokenRegistry_$2702",
+              "typeString": "contract DXTokenRegistry"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 147,
+              "name": "DXTokenRegistry",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 2702,
+              "src": "309:15:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_DXTokenRegistry_$2702",
+                "typeString": "contract DXTokenRegistry"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 150,
+            "mutability": "mutable",
+            "name": "dxTokenRegistryListId",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 238,
+            "src": "346:29:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 149,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "346:7:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 173,
+              "nodeType": "Block",
+              "src": "478:195:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 161,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 157,
+                      "name": "dxTokenRegistry",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 148,
+                      "src": "488:15:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_DXTokenRegistry_$2702",
+                        "typeString": "contract DXTokenRegistry"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 159,
+                          "name": "_dxTokenRegistryAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 152,
+                          "src": "522:23:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 158,
+                        "name": "DXTokenRegistry",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2702,
+                        "src": "506:15:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_DXTokenRegistry_$2702_$",
+                          "typeString": "type(contract DXTokenRegistry)"
+                        }
+                      },
+                      "id": 160,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "506:40:3",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_DXTokenRegistry_$2702",
+                        "typeString": "contract DXTokenRegistry"
+                      }
+                    },
+                    "src": "488:58:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_DXTokenRegistry_$2702",
+                      "typeString": "contract DXTokenRegistry"
+                    }
+                  },
+                  "id": 162,
+                  "nodeType": "ExpressionStatement",
+                  "src": "488:58:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 165,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 163,
+                      "name": "dxTokenRegistryListId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 150,
+                      "src": "556:21:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 164,
+                      "name": "_dxTokenRegistryListId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 154,
+                      "src": "580:22:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "556:46:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 166,
+                  "nodeType": "ExpressionStatement",
+                  "src": "556:46:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 168,
+                            "name": "this",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": -28,
+                            "src": "631:4:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_contract$_DefaultRewardTokensValidator_$238",
+                              "typeString": "contract DefaultRewardTokensValidator"
+                            }
+                          },
+                          "id": 169,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "areRewardTokensValid",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 237,
+                          "src": "631:25:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_external_nonpayable$_t_array$_t_address_$dyn_memory_ptr_$returns$_t_bool_$",
+                            "typeString": "function (address[] memory) external returns (bool)"
+                          }
+                        },
+                        "id": 170,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "lValueRequested": false,
+                        "memberName": "selector",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "631:34:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bytes4",
+                          "typeString": "bytes4"
+                        }
+                      ],
+                      "id": 167,
+                      "name": "_registerInterface",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 585,
+                      "src": "612:18:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_bytes4_$returns$__$",
+                        "typeString": "function (bytes4)"
+                      }
+                    },
+                    "id": 171,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "612:54:3",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 172,
+                  "nodeType": "ExpressionStatement",
+                  "src": "612:54:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 174,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 155,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 152,
+                  "mutability": "mutable",
+                  "name": "_dxTokenRegistryAddress",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 174,
+                  "src": "394:31:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 151,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "394:7:3",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 154,
+                  "mutability": "mutable",
+                  "name": "_dxTokenRegistryListId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 174,
+                  "src": "427:30:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 153,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "427:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "393:65:3"
+            },
+            "returnParameters": {
+              "id": 156,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "478:0:3"
+            },
+            "scope": 238,
+            "src": "382:291:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 187,
+              "nodeType": "Block",
+              "src": "779:75:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 185,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 181,
+                      "name": "dxTokenRegistry",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 148,
+                      "src": "789:15:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_DXTokenRegistry_$2702",
+                        "typeString": "contract DXTokenRegistry"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 183,
+                          "name": "_dxTokenRegistryAddress",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 176,
+                          "src": "823:23:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 182,
+                        "name": "DXTokenRegistry",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 2702,
+                        "src": "807:15:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_DXTokenRegistry_$2702_$",
+                          "typeString": "type(contract DXTokenRegistry)"
+                        }
+                      },
+                      "id": 184,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "807:40:3",
+                      "tryCall": false,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_DXTokenRegistry_$2702",
+                        "typeString": "contract DXTokenRegistry"
+                      }
+                    },
+                    "src": "789:58:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_DXTokenRegistry_$2702",
+                      "typeString": "contract DXTokenRegistry"
+                    }
+                  },
+                  "id": 186,
+                  "nodeType": "ExpressionStatement",
+                  "src": "789:58:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "7ea54050",
+            "id": 188,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 179,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 178,
+                  "name": "onlyOwner",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 478,
+                  "src": "765:9:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "765:9:3"
+              }
+            ],
+            "name": "setDxTokenRegistry",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 177,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 176,
+                  "mutability": "mutable",
+                  "name": "_dxTokenRegistryAddress",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 188,
+                  "src": "707:31:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 175,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "707:7:3",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "706:33:3"
+            },
+            "returnParameters": {
+              "id": 180,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "779:0:3"
+            },
+            "scope": 238,
+            "src": "679:175:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "body": {
+              "id": 199,
+              "nodeType": "Block",
+              "src": "965:63:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 197,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 195,
+                      "name": "dxTokenRegistryListId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 150,
+                      "src": "975:21:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 196,
+                      "name": "_dxTokenRegistryListId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 190,
+                      "src": "999:22:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "975:46:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 198,
+                  "nodeType": "ExpressionStatement",
+                  "src": "975:46:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "9189c0f2",
+            "id": 200,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "arguments": null,
+                "id": 193,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 192,
+                  "name": "onlyOwner",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 478,
+                  "src": "951:9:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "951:9:3"
+              }
+            ],
+            "name": "setDxTokenRegistryListId",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 191,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 190,
+                  "mutability": "mutable",
+                  "name": "_dxTokenRegistryListId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 200,
+                  "src": "894:30:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 189,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "894:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "893:32:3"
+            },
+            "returnParameters": {
+              "id": 194,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "965:0:3"
+            },
+            "scope": 238,
+            "src": "860:168:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "baseFunctions": [
+              122
+            ],
+            "body": {
+              "id": 236,
+              "nodeType": "Block",
+              "src": "1159:326:3",
+              "statements": [
+                {
+                  "body": {
+                    "id": 232,
+                    "nodeType": "Block",
+                    "src": "1223:235:3",
+                    "statements": [
+                      {
+                        "condition": {
+                          "argumentTypes": null,
+                          "id": 227,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "nodeType": "UnaryOperation",
+                          "operator": "!",
+                          "prefix": true,
+                          "src": "1258:130:3",
+                          "subExpression": {
+                            "argumentTypes": null,
+                            "arguments": [
+                              {
+                                "argumentTypes": null,
+                                "id": 222,
+                                "name": "dxTokenRegistryListId",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 150,
+                                "src": "1310:21:3",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              },
+                              {
+                                "argumentTypes": null,
+                                "baseExpression": {
+                                  "argumentTypes": null,
+                                  "id": 223,
+                                  "name": "_rewardTokens",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 203,
+                                  "src": "1353:13:3",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_array$_t_address_$dyn_calldata_ptr",
+                                    "typeString": "address[] calldata"
+                                  }
+                                },
+                                "id": 225,
+                                "indexExpression": {
+                                  "argumentTypes": null,
+                                  "id": 224,
+                                  "name": "_i",
+                                  "nodeType": "Identifier",
+                                  "overloadedDeclarations": [],
+                                  "referencedDeclaration": 210,
+                                  "src": "1367:2:3",
+                                  "typeDescriptions": {
+                                    "typeIdentifier": "t_uint256",
+                                    "typeString": "uint256"
+                                  }
+                                },
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": false,
+                                "lValueRequested": false,
+                                "nodeType": "IndexAccess",
+                                "src": "1353:17:3",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              }
+                            ],
+                            "expression": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                },
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "expression": {
+                                "argumentTypes": null,
+                                "id": 220,
+                                "name": "dxTokenRegistry",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 148,
+                                "src": "1259:15:3",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_contract$_DXTokenRegistry_$2702",
+                                  "typeString": "contract DXTokenRegistry"
+                                }
+                              },
+                              "id": 221,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "isTokenActive",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": 2516,
+                              "src": "1259:29:3",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_function_external_view$_t_uint256_$_t_address_$returns$_t_bool_$",
+                                "typeString": "function (uint256,address) view external returns (bool)"
+                              }
+                            },
+                            "id": 226,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": false,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "1259:129:3",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_bool",
+                              "typeString": "bool"
+                            }
+                          },
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bool",
+                            "typeString": "bool"
+                          }
+                        },
+                        "falseBody": null,
+                        "id": 231,
+                        "nodeType": "IfStatement",
+                        "src": "1237:211:3",
+                        "trueBody": {
+                          "id": 230,
+                          "nodeType": "Block",
+                          "src": "1403:45:3",
+                          "statements": [
+                            {
+                              "expression": {
+                                "argumentTypes": null,
+                                "hexValue": "66616c7365",
+                                "id": 228,
+                                "isConstant": false,
+                                "isLValue": false,
+                                "isPure": true,
+                                "kind": "bool",
+                                "lValueRequested": false,
+                                "nodeType": "Literal",
+                                "src": "1428:5:3",
+                                "subdenomination": null,
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                },
+                                "value": "false"
+                              },
+                              "functionReturnParameters": 208,
+                              "id": 229,
+                              "nodeType": "Return",
+                              "src": "1421:12:3"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "condition": {
+                    "argumentTypes": null,
+                    "commonType": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    },
+                    "id": 216,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftExpression": {
+                      "argumentTypes": null,
+                      "id": 213,
+                      "name": "_i",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 210,
+                      "src": "1190:2:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "BinaryOperation",
+                    "operator": "<",
+                    "rightExpression": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 214,
+                        "name": "_rewardTokens",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 203,
+                        "src": "1195:13:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_array$_t_address_$dyn_calldata_ptr",
+                          "typeString": "address[] calldata"
+                        }
+                      },
+                      "id": 215,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "length",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "1195:20:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "1190:25:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 233,
+                  "initializationExpression": {
+                    "assignments": [
+                      210
+                    ],
+                    "declarations": [
+                      {
+                        "constant": false,
+                        "id": 210,
+                        "mutability": "mutable",
+                        "name": "_i",
+                        "nodeType": "VariableDeclaration",
+                        "overrides": null,
+                        "scope": 233,
+                        "src": "1174:10:3",
+                        "stateVariable": false,
+                        "storageLocation": "default",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "typeName": {
+                          "id": 209,
+                          "name": "uint256",
+                          "nodeType": "ElementaryTypeName",
+                          "src": "1174:7:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "value": null,
+                        "visibility": "internal"
+                      }
+                    ],
+                    "id": 212,
+                    "initialValue": {
+                      "argumentTypes": null,
+                      "hexValue": "30",
+                      "id": 211,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1187:1:3",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "nodeType": "VariableDeclarationStatement",
+                    "src": "1174:14:3"
+                  },
+                  "loopExpression": {
+                    "expression": {
+                      "argumentTypes": null,
+                      "id": 218,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "UnaryOperation",
+                      "operator": "++",
+                      "prefix": false,
+                      "src": "1217:4:3",
+                      "subExpression": {
+                        "argumentTypes": null,
+                        "id": 217,
+                        "name": "_i",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 210,
+                        "src": "1217:2:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 219,
+                    "nodeType": "ExpressionStatement",
+                    "src": "1217:4:3"
+                  },
+                  "nodeType": "ForStatement",
+                  "src": "1169:289:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "74727565",
+                    "id": 234,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "bool",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "1474:4:3",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    },
+                    "value": "true"
+                  },
+                  "functionReturnParameters": 208,
+                  "id": 235,
+                  "nodeType": "Return",
+                  "src": "1467:11:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "functionSelector": "69b034d3",
+            "id": 237,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "areRewardTokensValid",
+            "nodeType": "FunctionDefinition",
+            "overrides": {
+              "id": 205,
+              "nodeType": "OverrideSpecifier",
+              "overrides": [],
+              "src": "1123:8:3"
+            },
+            "parameters": {
+              "id": 204,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 203,
+                  "mutability": "mutable",
+                  "name": "_rewardTokens",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 237,
+                  "src": "1064:32:3",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_calldata_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 201,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1064:7:3",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 202,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1064:9:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1063:34:3"
+            },
+            "returnParameters": {
+              "id": 208,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 207,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 237,
+                  "src": "1149:4:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 206,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1149:4:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1148:6:3"
+            },
+            "scope": 238,
+            "src": "1034:451:3",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 239,
+        "src": "230:1257:3"
+      }
+    ],
+    "src": "37:1451:3"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/luzzif/Projects/swapr-erc20-staking-rewards-factory/contracts/validators/DefaultRewardTokensValidator.sol",
+      "exportedSymbols": {
+        "DefaultRewardTokensValidator": [
+          238
+        ]
+      },
+      "license": "GPL-3.0"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.6",
+            ".12"
+          ]
+        },
+        "id": 139,
+        "name": "PragmaDirective",
+        "src": "37:24:3"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 530,
+          "absolutePath": "@openzeppelin/contracts/access/Ownable.sol",
+          "file": "@openzeppelin/contracts/access/Ownable.sol",
+          "scope": 239,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 140,
+        "name": "ImportDirective",
+        "src": "63:52:3"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 124,
+          "absolutePath": "/home/luzzif/Projects/swapr-erc20-staking-rewards-factory/contracts/abstraction/IRewardTokensValidator.sol",
+          "file": "../abstraction/IRewardTokensValidator.sol",
+          "scope": 239,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 141,
+        "name": "ImportDirective",
+        "src": "116:51:3"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 2703,
+          "absolutePath": "dxdao-token-registry/contracts/dxTokenRegistry.sol",
+          "file": "dxdao-token-registry/contracts/dxTokenRegistry.sol",
+          "scope": 239,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 142,
+        "name": "ImportDirective",
+        "src": "168:60:3"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "contractDependencies": [
+            123,
+            420,
+            529,
+            586,
+            770
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            238,
+            529,
+            420,
+            123,
+            586,
+            770
+          ],
+          "name": "DefaultRewardTokensValidator",
+          "scope": 239
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "IRewardTokensValidator",
+                  "referencedDeclaration": 123,
+                  "type": "contract IRewardTokensValidator"
+                },
+                "id": 143,
+                "name": "UserDefinedTypeName",
+                "src": "271:22:3"
+              }
+            ],
+            "id": 144,
+            "name": "InheritanceSpecifier",
+            "src": "271:22:3"
+          },
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Ownable",
+                  "referencedDeclaration": 529,
+                  "type": "contract Ownable"
+                },
+                "id": 145,
+                "name": "UserDefinedTypeName",
+                "src": "295:7:3"
+              }
+            ],
+            "id": 146,
+            "name": "InheritanceSpecifier",
+            "src": "295:7:3"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "mutability": "mutable",
+              "name": "dxTokenRegistry",
+              "overrides": null,
+              "scope": 238,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract DXTokenRegistry",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "DXTokenRegistry",
+                  "referencedDeclaration": 2702,
+                  "type": "contract DXTokenRegistry"
+                },
+                "id": 147,
+                "name": "UserDefinedTypeName",
+                "src": "309:15:3"
+              }
+            ],
+            "id": 148,
+            "name": "VariableDeclaration",
+            "src": "309:31:3"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "mutability": "mutable",
+              "name": "dxTokenRegistryListId",
+              "overrides": null,
+              "scope": 238,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint256",
+                  "type": "uint256"
+                },
+                "id": 149,
+                "name": "ElementaryTypeName",
+                "src": "346:7:3"
+              }
+            ],
+            "id": 150,
+            "name": "VariableDeclaration",
+            "src": "346:29:3"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": true,
+              "kind": "constructor",
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "overrides": null,
+              "scope": 238,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_dxTokenRegistryAddress",
+                      "overrides": null,
+                      "scope": 174,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 151,
+                        "name": "ElementaryTypeName",
+                        "src": "394:7:3"
+                      }
+                    ],
+                    "id": 152,
+                    "name": "VariableDeclaration",
+                    "src": "394:31:3"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_dxTokenRegistryListId",
+                      "overrides": null,
+                      "scope": 174,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 153,
+                        "name": "ElementaryTypeName",
+                        "src": "427:7:3"
+                      }
+                    ],
+                    "id": 154,
+                    "name": "VariableDeclaration",
+                    "src": "427:30:3"
+                  }
+                ],
+                "id": 155,
+                "name": "ParameterList",
+                "src": "393:65:3"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 156,
+                "name": "ParameterList",
+                "src": "478:0:3"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract DXTokenRegistry"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 148,
+                              "type": "contract DXTokenRegistry",
+                              "value": "dxTokenRegistry"
+                            },
+                            "id": 157,
+                            "name": "Identifier",
+                            "src": "488:15:3"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "contract DXTokenRegistry",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 2702,
+                                  "type": "type(contract DXTokenRegistry)",
+                                  "value": "DXTokenRegistry"
+                                },
+                                "id": 158,
+                                "name": "Identifier",
+                                "src": "506:15:3"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 152,
+                                  "type": "address",
+                                  "value": "_dxTokenRegistryAddress"
+                                },
+                                "id": 159,
+                                "name": "Identifier",
+                                "src": "522:23:3"
+                              }
+                            ],
+                            "id": 160,
+                            "name": "FunctionCall",
+                            "src": "506:40:3"
+                          }
+                        ],
+                        "id": 161,
+                        "name": "Assignment",
+                        "src": "488:58:3"
+                      }
+                    ],
+                    "id": 162,
+                    "name": "ExpressionStatement",
+                    "src": "488:58:3"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 150,
+                              "type": "uint256",
+                              "value": "dxTokenRegistryListId"
+                            },
+                            "id": 163,
+                            "name": "Identifier",
+                            "src": "556:21:3"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 154,
+                              "type": "uint256",
+                              "value": "_dxTokenRegistryListId"
+                            },
+                            "id": 164,
+                            "name": "Identifier",
+                            "src": "580:22:3"
+                          }
+                        ],
+                        "id": 165,
+                        "name": "Assignment",
+                        "src": "556:46:3"
+                      }
+                    ],
+                    "id": 166,
+                    "name": "ExpressionStatement",
+                    "src": "556:46:3"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "tryCall": false,
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bytes4",
+                                  "typeString": "bytes4"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 585,
+                              "type": "function (bytes4)",
+                              "value": "_registerInterface"
+                            },
+                            "id": 167,
+                            "name": "Identifier",
+                            "src": "612:18:3"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "member_name": "selector",
+                              "referencedDeclaration": null,
+                              "type": "bytes4"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "areRewardTokensValid",
+                                  "referencedDeclaration": 237,
+                                  "type": "function (address[] memory) external returns (bool)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": -28,
+                                      "type": "contract DefaultRewardTokensValidator",
+                                      "value": "this"
+                                    },
+                                    "id": 168,
+                                    "name": "Identifier",
+                                    "src": "631:4:3"
+                                  }
+                                ],
+                                "id": 169,
+                                "name": "MemberAccess",
+                                "src": "631:25:3"
+                              }
+                            ],
+                            "id": 170,
+                            "name": "MemberAccess",
+                            "src": "631:34:3"
+                          }
+                        ],
+                        "id": 171,
+                        "name": "FunctionCall",
+                        "src": "612:54:3"
+                      }
+                    ],
+                    "id": 172,
+                    "name": "ExpressionStatement",
+                    "src": "612:54:3"
+                  }
+                ],
+                "id": 173,
+                "name": "Block",
+                "src": "478:195:3"
+              }
+            ],
+            "id": 174,
+            "name": "FunctionDefinition",
+            "src": "382:291:3"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "7ea54050",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "name": "setDxTokenRegistry",
+              "overrides": null,
+              "scope": 238,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_dxTokenRegistryAddress",
+                      "overrides": null,
+                      "scope": 188,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 175,
+                        "name": "ElementaryTypeName",
+                        "src": "707:7:3"
+                      }
+                    ],
+                    "id": 176,
+                    "name": "VariableDeclaration",
+                    "src": "707:31:3"
+                  }
+                ],
+                "id": 177,
+                "name": "ParameterList",
+                "src": "706:33:3"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 180,
+                "name": "ParameterList",
+                "src": "779:0:3"
+              },
+              {
+                "attributes": {
+                  "arguments": null
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 478,
+                      "type": "modifier ()",
+                      "value": "onlyOwner"
+                    },
+                    "id": 178,
+                    "name": "Identifier",
+                    "src": "765:9:3"
+                  }
+                ],
+                "id": 179,
+                "name": "ModifierInvocation",
+                "src": "765:9:3"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract DXTokenRegistry"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 148,
+                              "type": "contract DXTokenRegistry",
+                              "value": "dxTokenRegistry"
+                            },
+                            "id": 181,
+                            "name": "Identifier",
+                            "src": "789:15:3"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "tryCall": false,
+                              "type": "contract DXTokenRegistry",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 2702,
+                                  "type": "type(contract DXTokenRegistry)",
+                                  "value": "DXTokenRegistry"
+                                },
+                                "id": 182,
+                                "name": "Identifier",
+                                "src": "807:15:3"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 176,
+                                  "type": "address",
+                                  "value": "_dxTokenRegistryAddress"
+                                },
+                                "id": 183,
+                                "name": "Identifier",
+                                "src": "823:23:3"
+                              }
+                            ],
+                            "id": 184,
+                            "name": "FunctionCall",
+                            "src": "807:40:3"
+                          }
+                        ],
+                        "id": 185,
+                        "name": "Assignment",
+                        "src": "789:58:3"
+                      }
+                    ],
+                    "id": 186,
+                    "name": "ExpressionStatement",
+                    "src": "789:58:3"
+                  }
+                ],
+                "id": 187,
+                "name": "Block",
+                "src": "779:75:3"
+              }
+            ],
+            "id": 188,
+            "name": "FunctionDefinition",
+            "src": "679:175:3"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "functionSelector": "9189c0f2",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "name": "setDxTokenRegistryListId",
+              "overrides": null,
+              "scope": 238,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_dxTokenRegistryListId",
+                      "overrides": null,
+                      "scope": 200,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 189,
+                        "name": "ElementaryTypeName",
+                        "src": "894:7:3"
+                      }
+                    ],
+                    "id": 190,
+                    "name": "VariableDeclaration",
+                    "src": "894:30:3"
+                  }
+                ],
+                "id": 191,
+                "name": "ParameterList",
+                "src": "893:32:3"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 194,
+                "name": "ParameterList",
+                "src": "965:0:3"
+              },
+              {
+                "attributes": {
+                  "arguments": null
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 478,
+                      "type": "modifier ()",
+                      "value": "onlyOwner"
+                    },
+                    "id": 192,
+                    "name": "Identifier",
+                    "src": "951:9:3"
+                  }
+                ],
+                "id": 193,
+                "name": "ModifierInvocation",
+                "src": "951:9:3"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 150,
+                              "type": "uint256",
+                              "value": "dxTokenRegistryListId"
+                            },
+                            "id": 195,
+                            "name": "Identifier",
+                            "src": "975:21:3"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 190,
+                              "type": "uint256",
+                              "value": "_dxTokenRegistryListId"
+                            },
+                            "id": 196,
+                            "name": "Identifier",
+                            "src": "999:22:3"
+                          }
+                        ],
+                        "id": 197,
+                        "name": "Assignment",
+                        "src": "975:46:3"
+                      }
+                    ],
+                    "id": 198,
+                    "name": "ExpressionStatement",
+                    "src": "975:46:3"
+                  }
+                ],
+                "id": 199,
+                "name": "Block",
+                "src": "965:63:3"
+              }
+            ],
+            "id": 200,
+            "name": "FunctionDefinition",
+            "src": "860:168:3"
+          },
+          {
+            "attributes": {
+              "baseFunctions": [
+                122
+              ],
+              "documentation": null,
+              "functionSelector": "69b034d3",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "areRewardTokensValid",
+              "scope": 238,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "overrides": [
+                    null
+                  ]
+                },
+                "id": 205,
+                "name": "OverrideSpecifier",
+                "src": "1123:8:3"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_rewardTokens",
+                      "overrides": null,
+                      "scope": 237,
+                      "stateVariable": false,
+                      "storageLocation": "calldata",
+                      "type": "address[]",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "length": null,
+                          "type": "address[]"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "address",
+                              "stateMutability": "nonpayable",
+                              "type": "address"
+                            },
+                            "id": 201,
+                            "name": "ElementaryTypeName",
+                            "src": "1064:7:3"
+                          }
+                        ],
+                        "id": 202,
+                        "name": "ArrayTypeName",
+                        "src": "1064:9:3"
+                      }
+                    ],
+                    "id": 203,
+                    "name": "VariableDeclaration",
+                    "src": "1064:32:3"
+                  }
+                ],
+                "id": 204,
+                "name": "ParameterList",
+                "src": "1063:34:3"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "",
+                      "overrides": null,
+                      "scope": 237,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 206,
+                        "name": "ElementaryTypeName",
+                        "src": "1149:4:3"
+                      }
+                    ],
+                    "id": 207,
+                    "name": "VariableDeclaration",
+                    "src": "1149:4:3"
+                  }
+                ],
+                "id": 208,
+                "name": "ParameterList",
+                "src": "1148:6:3"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "assignments": [
+                            210
+                          ]
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "constant": false,
+                              "mutability": "mutable",
+                              "name": "_i",
+                              "overrides": null,
+                              "scope": 233,
+                              "stateVariable": false,
+                              "storageLocation": "default",
+                              "type": "uint256",
+                              "value": null,
+                              "visibility": "internal"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "name": "uint256",
+                                  "type": "uint256"
+                                },
+                                "id": 209,
+                                "name": "ElementaryTypeName",
+                                "src": "1174:7:3"
+                              }
+                            ],
+                            "id": 210,
+                            "name": "VariableDeclaration",
+                            "src": "1174:10:3"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 211,
+                            "name": "Literal",
+                            "src": "1187:1:3"
+                          }
+                        ],
+                        "id": 212,
+                        "name": "VariableDeclarationStatement",
+                        "src": "1174:14:3"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "<",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 210,
+                              "type": "uint256",
+                              "value": "_i"
+                            },
+                            "id": 213,
+                            "name": "Identifier",
+                            "src": "1190:2:3"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "length",
+                              "referencedDeclaration": null,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 203,
+                                  "type": "address[] calldata",
+                                  "value": "_rewardTokens"
+                                },
+                                "id": 214,
+                                "name": "Identifier",
+                                "src": "1195:13:3"
+                              }
+                            ],
+                            "id": 215,
+                            "name": "MemberAccess",
+                            "src": "1195:20:3"
+                          }
+                        ],
+                        "id": 216,
+                        "name": "BinaryOperation",
+                        "src": "1190:25:3"
+                      },
+                      {
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "++",
+                              "prefix": false,
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 210,
+                                  "type": "uint256",
+                                  "value": "_i"
+                                },
+                                "id": 217,
+                                "name": "Identifier",
+                                "src": "1217:2:3"
+                              }
+                            ],
+                            "id": 218,
+                            "name": "UnaryOperation",
+                            "src": "1217:4:3"
+                          }
+                        ],
+                        "id": 219,
+                        "name": "ExpressionStatement",
+                        "src": "1217:4:3"
+                      },
+                      {
+                        "children": [
+                          {
+                            "attributes": {
+                              "falseBody": null
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "operator": "!",
+                                  "prefix": true,
+                                  "type": "bool"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "isStructConstructorCall": false,
+                                      "lValueRequested": false,
+                                      "names": [
+                                        null
+                                      ],
+                                      "tryCall": false,
+                                      "type": "bool",
+                                      "type_conversion": false
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": [
+                                            {
+                                              "typeIdentifier": "t_uint256",
+                                              "typeString": "uint256"
+                                            },
+                                            {
+                                              "typeIdentifier": "t_address",
+                                              "typeString": "address"
+                                            }
+                                          ],
+                                          "isConstant": false,
+                                          "isLValue": false,
+                                          "isPure": false,
+                                          "lValueRequested": false,
+                                          "member_name": "isTokenActive",
+                                          "referencedDeclaration": 2516,
+                                          "type": "function (uint256,address) view external returns (bool)"
+                                        },
+                                        "children": [
+                                          {
+                                            "attributes": {
+                                              "argumentTypes": null,
+                                              "overloadedDeclarations": [
+                                                null
+                                              ],
+                                              "referencedDeclaration": 148,
+                                              "type": "contract DXTokenRegistry",
+                                              "value": "dxTokenRegistry"
+                                            },
+                                            "id": 220,
+                                            "name": "Identifier",
+                                            "src": "1259:15:3"
+                                          }
+                                        ],
+                                        "id": 221,
+                                        "name": "MemberAccess",
+                                        "src": "1259:29:3"
+                                      },
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 150,
+                                          "type": "uint256",
+                                          "value": "dxTokenRegistryListId"
+                                        },
+                                        "id": 222,
+                                        "name": "Identifier",
+                                        "src": "1310:21:3"
+                                      },
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "isConstant": false,
+                                          "isLValue": false,
+                                          "isPure": false,
+                                          "lValueRequested": false,
+                                          "type": "address"
+                                        },
+                                        "children": [
+                                          {
+                                            "attributes": {
+                                              "argumentTypes": null,
+                                              "overloadedDeclarations": [
+                                                null
+                                              ],
+                                              "referencedDeclaration": 203,
+                                              "type": "address[] calldata",
+                                              "value": "_rewardTokens"
+                                            },
+                                            "id": 223,
+                                            "name": "Identifier",
+                                            "src": "1353:13:3"
+                                          },
+                                          {
+                                            "attributes": {
+                                              "argumentTypes": null,
+                                              "overloadedDeclarations": [
+                                                null
+                                              ],
+                                              "referencedDeclaration": 210,
+                                              "type": "uint256",
+                                              "value": "_i"
+                                            },
+                                            "id": 224,
+                                            "name": "Identifier",
+                                            "src": "1367:2:3"
+                                          }
+                                        ],
+                                        "id": 225,
+                                        "name": "IndexAccess",
+                                        "src": "1353:17:3"
+                                      }
+                                    ],
+                                    "id": 226,
+                                    "name": "FunctionCall",
+                                    "src": "1259:129:3"
+                                  }
+                                ],
+                                "id": 227,
+                                "name": "UnaryOperation",
+                                "src": "1258:130:3"
+                              },
+                              {
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "functionReturnParameters": 208
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "hexvalue": "66616c7365",
+                                          "isConstant": false,
+                                          "isLValue": false,
+                                          "isPure": true,
+                                          "lValueRequested": false,
+                                          "subdenomination": null,
+                                          "token": "bool",
+                                          "type": "bool",
+                                          "value": "false"
+                                        },
+                                        "id": 228,
+                                        "name": "Literal",
+                                        "src": "1428:5:3"
+                                      }
+                                    ],
+                                    "id": 229,
+                                    "name": "Return",
+                                    "src": "1421:12:3"
+                                  }
+                                ],
+                                "id": 230,
+                                "name": "Block",
+                                "src": "1403:45:3"
+                              }
+                            ],
+                            "id": 231,
+                            "name": "IfStatement",
+                            "src": "1237:211:3"
+                          }
+                        ],
+                        "id": 232,
+                        "name": "Block",
+                        "src": "1223:235:3"
+                      }
+                    ],
+                    "id": 233,
+                    "name": "ForStatement",
+                    "src": "1169:289:3"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 208
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "hexvalue": "74727565",
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "subdenomination": null,
+                          "token": "bool",
+                          "type": "bool",
+                          "value": "true"
+                        },
+                        "id": 234,
+                        "name": "Literal",
+                        "src": "1474:4:3"
+                      }
+                    ],
+                    "id": 235,
+                    "name": "Return",
+                    "src": "1467:11:3"
+                  }
+                ],
+                "id": 236,
+                "name": "Block",
+                "src": "1159:326:3"
+              }
+            ],
+            "id": 237,
+            "name": "FunctionDefinition",
+            "src": "1034:451:3"
+          }
+        ],
+        "id": 238,
+        "name": "ContractDefinition",
+        "src": "230:1257:3"
+      }
+    ],
+    "id": 239,
+    "name": "SourceUnit",
+    "src": "37:1451:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.12+commit.27d51765.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.3",
+  "updatedAt": "2020-12-31T16:20:59.788Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "supportsInterface(bytes4)": {
+        "details": "See {IERC165-supportsInterface}. Time complexity O(1), guaranteed to always use less than 30 000 gas."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
