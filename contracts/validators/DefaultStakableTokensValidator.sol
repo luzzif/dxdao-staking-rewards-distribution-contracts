@@ -2,15 +2,16 @@
 
 pragma solidity ^0.6.12;
 
-import "../abstraction/IStakableTokensValidator.sol";
+import "../abstraction/ITokensValidator.sol";
 import "dxswap-core/contracts/interfaces/IDXswapPair.sol";
+import "dxswap-core/contracts/interfaces/IDXswapFactory.sol";
 import "dxdao-token-registry/contracts/dxTokenRegistry.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract DefaultStakableTokensValidator is IStakableTokensValidator, Ownable {
+contract DefaultStakableTokensValidator is ITokensValidator, Ownable {
     DXTokenRegistry public dxTokenRegistry;
     uint256 public dxTokenRegistryListId;
-    address public dxSwapFactoryAddress;
+    IDXswapFactory public dxSwapFactory;
 
     constructor(
         address _dxTokenRegistryAddress,
@@ -31,7 +32,7 @@ contract DefaultStakableTokensValidator is IStakableTokensValidator, Ownable {
         );
         dxTokenRegistry = DXTokenRegistry(_dxTokenRegistryAddress);
         dxTokenRegistryListId = _dxTokenRegistryListId;
-        dxSwapFactoryAddress = _dxSwapFactoryAddress;
+        dxSwapFactory = IDXswapFactory(_dxSwapFactoryAddress);
     }
 
     function setDxTokenRegistry(address _dxTokenRegistryAddress)
@@ -56,7 +57,7 @@ contract DefaultStakableTokensValidator is IStakableTokensValidator, Ownable {
         dxTokenRegistryListId = _dxTokenRegistryListId;
     }
 
-    function setDxSwapFactoryAddress(address _dxSwapFactoryAddress)
+    function setDxSwapFactory(address _dxSwapFactoryAddress)
         external
         onlyOwner
     {
@@ -64,53 +65,68 @@ contract DefaultStakableTokensValidator is IStakableTokensValidator, Ownable {
             _dxSwapFactoryAddress != address(0),
             "DefaultStakableTokensValidator: 0-address factory address"
         );
-        dxSwapFactoryAddress = _dxSwapFactoryAddress;
+        dxSwapFactory = IDXswapFactory(_dxSwapFactoryAddress);
     }
 
-    function areStakableTokensValid(address[] calldata _stakableTokens)
+    function validateTokens(address[] calldata _stakableTokens)
         external
         view
         override
-        returns (bool)
     {
-        if (_stakableTokens.length == 0) {
-            return false;
-        }
+        require(
+            _stakableTokens.length > 0,
+            "DefaultStakableTokensValidator: 0-length stakable tokens array"
+        );
         for (uint256 _i = 0; _i < _stakableTokens.length; _i++) {
             address _stakableTokenAddress = _stakableTokens[_i];
-            if (_stakableTokenAddress == address(0)) {
-                return false;
-            }
-            IDXswapPair _dxSwapPair = IDXswapPair(_stakableTokenAddress);
-            address _token0;
-            address _token1;
-            try _dxSwapPair.factory() returns (address _fetchedFactoryAddress) {
-                if (_fetchedFactoryAddress != dxSwapFactoryAddress) {
-                    return false;
-                }
+            require(
+                _stakableTokenAddress != address(0),
+                "DefaultStakableTokensValidator: 0-address stakable token"
+            );
+            IDXswapPair _potentialDxSwapPair =
+                IDXswapPair(_stakableTokenAddress);
+            address _factory;
+            try _potentialDxSwapPair.factory() returns (
+                address _fetchedFactory
+            ) {
+                _factory = _fetchedFactory;
             } catch {
-                return false;
+                revert(
+                    "DefaultStakableTokensValidator: could not get factory address for pair"
+                );
             }
-            try _dxSwapPair.token0() returns (address _fetchedToken0) {
+            require(
+                _factory == address(dxSwapFactory),
+                "DefaultStakableTokensValidator: invalid factory address for stakable token"
+            );
+            address _token0;
+            try _potentialDxSwapPair.token0() returns (address _fetchedToken0) {
                 _token0 = _fetchedToken0;
             } catch {
-                return false;
+                revert(
+                    "DefaultStakableTokensValidator: could not get token0 for pair"
+                );
             }
-            try _dxSwapPair.token1() returns (address _fetchedToken1) {
+            require(
+                dxTokenRegistry.isTokenActive(dxTokenRegistryListId, _token0),
+                "DefaultStakableTokensValidator: invalid token 0 in Swapr pair"
+            );
+            address _token1;
+            try _potentialDxSwapPair.token1() returns (address _fetchedToken1) {
                 _token1 = _fetchedToken1;
             } catch {
-                return false;
+                revert(
+                    "DefaultStakableTokensValidator: could not get token1 for pair"
+                );
             }
-            if (
-                !dxTokenRegistry.isTokenActive(
-                    dxTokenRegistryListId,
-                    _token0
-                ) ||
-                !dxTokenRegistry.isTokenActive(dxTokenRegistryListId, _token1)
-            ) {
-                return false;
-            }
+            require(
+                dxTokenRegistry.isTokenActive(dxTokenRegistryListId, _token1),
+                "DefaultStakableTokensValidator: invalid token 1 in Swapr pair"
+            );
+            require(
+                dxSwapFactory.getPair(_token0, _token1) != address(0),
+                "DefaultStakableTokensValidator: pair not registered in factory"
+            );
         }
-        return true;
     }
 }

@@ -1,6 +1,7 @@
 require("../utils/assertion");
 const BN = require("bn.js");
 const { expect } = require("chai");
+const { createSwaprPair, getOrderedTokensInPair } = require("../utils");
 
 const SwaprERC20DistributionFactory = artifacts.require(
     "SwaprERC20DistributionFactory"
@@ -187,7 +188,7 @@ contract("SwaprERC20DistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "SwaprERC20DistributionFactory: invalid reward tokens"
+                "DefaultRewardTokensValidator: 0-address reward token"
             );
         }
     });
@@ -211,7 +212,7 @@ contract("SwaprERC20DistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "SwaprERC20DistributionFactory: invalid reward tokens"
+                "DefaultRewardTokensValidator: invalid reward token"
             );
         }
     });
@@ -234,21 +235,30 @@ contract("SwaprERC20DistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "SwaprERC20DistributionFactory: invalid stakable tokens"
+                "DefaultStakableTokensValidator: 0-address stakable token"
             );
         }
     });
 
-    it("should fail when trying to create a distribution with an unlisted stakable token", async () => {
+    it("should fail when trying to create a distribution with a Swapr LP token related to a pair with an unlisted token0", async () => {
         try {
-            // setting valid list on reward tokens validator
+            const { token0Address, token1Address } = getOrderedTokensInPair(
+                firstStakableTokenInstance.address,
+                secondStakableTokenInstance.address
+            );
             await dxTokenRegistryInstance.addList("test");
             await dxTokenRegistryInstance.addTokens(1, [
                 rewardTokenInstance.address,
+                token1Address,
             ]);
             await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
                 1,
                 { from: ownerAddress }
+            );
+            const lpTokenAddress = await createSwaprPair(
+                dxSwapFactoryInstance,
+                token0Address,
+                token1Address
             );
             // setting valid list on stakable tokens validator
             await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
@@ -257,7 +267,7 @@ contract("SwaprERC20DistributionFactory", () => {
             );
             await swaprERC20DistributionFactoryInstance.createDistribution(
                 [rewardTokenInstance.address],
-                [firstStakableTokenInstance.address],
+                [lpTokenAddress],
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
@@ -266,12 +276,53 @@ contract("SwaprERC20DistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "SwaprERC20DistributionFactory: invalid stakable tokens"
+                "DefaultStakableTokensValidator: invalid token 0 in Swapr pair"
             );
         }
     });
 
-    it("should fail when trying to create a distribution with an listed stakable token that is not a swapr pair", async () => {
+    it("should fail when trying to create a distribution with a Swapr LP token related to a pair with an unlisted token1", async () => {
+        try {
+            const { token0Address, token1Address } = getOrderedTokensInPair(
+                firstStakableTokenInstance.address,
+                secondStakableTokenInstance.address
+            );
+            await dxTokenRegistryInstance.addList("test");
+            await dxTokenRegistryInstance.addTokens(1, [
+                rewardTokenInstance.address,
+                token0Address,
+            ]);
+            await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
+                1,
+                { from: ownerAddress }
+            );
+            const lpTokenAddress = await createSwaprPair(
+                dxSwapFactoryInstance,
+                token0Address,
+                token1Address
+            );
+            // setting valid list on stakable tokens validator
+            await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
+                1,
+                { from: ownerAddress }
+            );
+            await swaprERC20DistributionFactoryInstance.createDistribution(
+                [rewardTokenInstance.address],
+                [lpTokenAddress],
+                ["1"],
+                Math.floor(Date.now() / 1000) + 1000,
+                Math.floor(Date.now() / 1000) + 2000,
+                false
+            );
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "DefaultStakableTokensValidator: invalid token 1 in Swapr pair"
+            );
+        }
+    });
+
+    it("should fail when trying to create a distribution with a listed stakable token that is not a swapr pair", async () => {
         try {
             // listing reward token so that validation passes
             await dxTokenRegistryInstance.addList("test");
@@ -294,53 +345,7 @@ contract("SwaprERC20DistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "SwaprERC20DistributionFactory: invalid stakable tokens"
-            );
-        }
-    });
-
-    it("should fail when trying to create a distribution with a stakable token that represents a swapr pair with only one listed token out of two in it", async () => {
-        try {
-            // listing reward token so that validation passes
-            await dxTokenRegistryInstance.addList("test");
-            await dxTokenRegistryInstance.addTokens(1, [
-                rewardTokenInstance.address,
-            ]);
-            // listing only one stakable token
-            await dxTokenRegistryInstance.addTokens(1, [
-                firstStakableTokenInstance.address,
-            ]);
-            // setting validation token list to correct id for validators. This has
-            // already been done in the before each hook, but redoing it here for
-            // clarity
-            await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
-                1,
-                { from: ownerAddress }
-            );
-            await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
-                1,
-                { from: ownerAddress }
-            );
-            // creating pair on swapr. Only the first token is actually listed
-            const { logs } = await dxSwapFactoryInstance.createPair(
-                firstStakableTokenInstance.address,
-                secondStakableTokenInstance.address
-            );
-            const createdPairAddress = logs.find(
-                (log) => log.event === "PairCreated"
-            ).address;
-            await swaprERC20DistributionFactoryInstance.createDistribution(
-                [rewardTokenInstance.address],
-                [createdPairAddress],
-                ["1"],
-                Math.floor(Date.now() / 1000) + 1000,
-                Math.floor(Date.now() / 1000) + 2000,
-                false
-            );
-            throw new Error("should have failed");
-        } catch (error) {
-            expect(error.message).to.contain(
-                "SwaprERC20DistributionFactory: invalid stakable tokens"
+                "DefaultStakableTokensValidator: could not get factory address for pair"
             );
         }
     });
@@ -368,27 +373,19 @@ contract("SwaprERC20DistributionFactory", () => {
             1,
             { from: ownerAddress }
         );
-        // creating pair on swapr. Both tokens are listed
-        const { logs } = await dxSwapFactoryInstance.createPair(
+        const { token0Address, token1Address } = getOrderedTokensInPair(
             firstStakableTokenInstance.address,
             secondStakableTokenInstance.address
         );
-        const { pair: createdPairAddress } = logs.find(
-            (log) => log.event === "PairCreated"
-        ).args;
-        const expectedToken0 =
-            parseInt(firstStakableTokenInstance.address, 16) <
-            parseInt(secondStakableTokenInstance.address, 16)
-                ? firstStakableTokenInstance.address
-                : secondStakableTokenInstance.address;
-        const expectedToken1 =
-            parseInt(firstStakableTokenInstance.address, 16) >=
-            parseInt(secondStakableTokenInstance.address, 16)
-                ? firstStakableTokenInstance.address
-                : secondStakableTokenInstance.address;
+        // creating pair on swapr. Both tokens are listed
+        const createdPairAddress = await createSwaprPair(
+            dxSwapFactoryInstance,
+            token0Address,
+            token1Address
+        );
         const createdPairInstance = await DXswapPair.at(createdPairAddress);
-        expect(await createdPairInstance.token0()).to.be.equal(expectedToken0);
-        expect(await createdPairInstance.token1()).to.be.equal(expectedToken1);
+        expect(await createdPairInstance.token0()).to.be.equal(token0Address);
+        expect(await createdPairInstance.token1()).to.be.equal(token1Address);
         expect(await createdPairInstance.factory()).to.be.equal(
             dxSwapFactoryInstance.address
         );

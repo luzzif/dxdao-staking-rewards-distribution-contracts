@@ -38,6 +38,7 @@ contract("DefaultRewardTokensValidator", () => {
                 1,
                 { from: ownerAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "DefaultRewardTokensValidator: 0-address token registry address"
@@ -52,6 +53,7 @@ contract("DefaultRewardTokensValidator", () => {
                 0,
                 { from: ownerAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "DefaultRewardTokensValidator: invalid token list id"
@@ -74,10 +76,11 @@ contract("DefaultRewardTokensValidator", () => {
 
     it("should fail when a non-owner tries to set a new dx token registry address", async () => {
         try {
-            await defaultRewardTokensValidatorInstance.setDxTokenRegistryAddress(
+            await defaultRewardTokensValidatorInstance.setDxTokenRegistry(
                 dxTokenRegistryInstance.address,
                 { from: randomAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "Ownable: caller is not the owner"
@@ -87,10 +90,11 @@ contract("DefaultRewardTokensValidator", () => {
 
     it("should fail when the owner tries to set a 0-address dx token registry", async () => {
         try {
-            await defaultRewardTokensValidatorInstance.setDxTokenRegistryAddress(
+            await defaultRewardTokensValidatorInstance.setDxTokenRegistry(
                 "0x0000000000000000000000000000000000000000",
                 { from: ownerAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "DefaultRewardTokensValidator: 0-address token registry address"
@@ -104,7 +108,7 @@ contract("DefaultRewardTokensValidator", () => {
         ).to.be.equal(dxTokenRegistryInstance.address);
         const newDxTokenRegistryAddress =
             "0x0000000000000000000000000000000000000aBc";
-        await defaultRewardTokensValidatorInstance.setDxTokenRegistryAddress(
+        await defaultRewardTokensValidatorInstance.setDxTokenRegistry(
             newDxTokenRegistryAddress,
             { from: ownerAddress }
         );
@@ -119,6 +123,7 @@ contract("DefaultRewardTokensValidator", () => {
                 1,
                 { from: randomAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "Ownable: caller is not the owner"
@@ -132,6 +137,7 @@ contract("DefaultRewardTokensValidator", () => {
                 0,
                 { from: ownerAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "DefaultRewardTokensValidator: invalid token list id"
@@ -153,98 +159,100 @@ contract("DefaultRewardTokensValidator", () => {
     });
 
     it("should signal reward tokens as invalid if an empty array is passed", async () => {
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([])
-        ).to.be.false;
+        try {
+            await defaultRewardTokensValidatorInstance.validateTokens([]);
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "DefaultRewardTokensValidator: 0-length reward tokens array"
+            );
+        }
     });
 
     it("should signal reward tokens as invalid if a single 0-address token is passed in the array", async () => {
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
+        try {
+            await defaultRewardTokensValidatorInstance.validateTokens([
                 "0x0000000000000000000000000000000000000000",
-            ])
-        ).to.be.false;
+            ]);
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "DefaultRewardTokensValidator: 0-address reward token"
+            );
+        }
     });
 
     it("should signal reward tokens as invalid if a single 0-address token is passed in the array after a non-0-address token", async () => {
-        // the first token is checked against the set token list, and it has to be
-        // there in order to validate the 0-address one, so we need to list it
-        await dxTokenRegistryInstance.addList("test");
-        await dxTokenRegistryInstance.addTokens(1, [
-            firstRewardTokenInstance.address,
-        ]);
-        await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
-            from: ownerAddress,
-        });
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
+        try {
+            // the first token is checked against the set token list, and it has to be
+            // there in order to validate the 0-address one, so we need to list it
+            await dxTokenRegistryInstance.addList("test");
+            await dxTokenRegistryInstance.addTokens(1, [
+                firstRewardTokenInstance.address,
+            ]);
+            await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
+                1,
+                {
+                    from: ownerAddress,
+                }
+            );
+            await defaultRewardTokensValidatorInstance.validateTokens([
                 firstRewardTokenInstance.address,
                 "0x0000000000000000000000000000000000000000",
-            ])
-        ).to.be.false;
-    });
-
-    it("should signal reward tokens as invalid if a single 0-address token is passed in the array after a non-0-address token", async () => {
-        // the first token is checked against the set token list, and it has to be
-        // there in order to validate the 0-address one, so we need to list it
-        await dxTokenRegistryInstance.addList("test");
-        await dxTokenRegistryInstance.addTokens(1, [
-            firstRewardTokenInstance.address,
-        ]);
-        await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
-            from: ownerAddress,
-        });
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
-                firstRewardTokenInstance.address,
-                "0x0000000000000000000000000000000000000000",
-            ])
-        ).to.be.false;
+            ]);
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "DefaultRewardTokensValidator: 0-address reward token"
+            );
+        }
     });
 
     it("should signal reward tokens as invalid if a single unlisted token is passed in the array", async () => {
-        // avoid invalid list errors by creating the list and setting it on the validator,
-        // but without adding the token under test to it
-        await dxTokenRegistryInstance.addList("test");
-        await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
-            from: ownerAddress,
-        });
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
+        try {
+            // avoid invalid list errors by creating the list and setting it on the validator,
+            // but without adding the token under test to it
+            await dxTokenRegistryInstance.addList("test");
+            await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
+                1,
+                {
+                    from: ownerAddress,
+                }
+            );
+            await defaultRewardTokensValidatorInstance.validateTokens([
                 firstRewardTokenInstance.address,
-            ])
-        ).to.be.false;
-    });
-
-    it("should signal reward tokens as invalid if a single unlisted token is passed in the array", async () => {
-        // avoid invalid list errors by creating the list and setting it on the validator,
-        // but without adding the token under test to it
-        await dxTokenRegistryInstance.addList("test");
-        await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
-            from: ownerAddress,
-        });
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
-                firstRewardTokenInstance.address,
-            ])
-        ).to.be.false;
+            ]);
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "DefaultRewardTokensValidator: invalid reward token"
+            );
+        }
     });
 
     it("should signal reward tokens as invalid if a single listed token is passed in alongside an unlisted token in the array", async () => {
-        await dxTokenRegistryInstance.addList("test");
-        // only the first reward token is listed
-        await dxTokenRegistryInstance.addTokens(1, [
-            firstRewardTokenInstance.address,
-        ]);
-        await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
-            from: ownerAddress,
-        });
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
+        try {
+            await dxTokenRegistryInstance.addList("test");
+            // only the first reward token is listed
+            await dxTokenRegistryInstance.addTokens(1, [
+                firstRewardTokenInstance.address,
+            ]);
+            await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
+                1,
+                {
+                    from: ownerAddress,
+                }
+            );
+            await defaultRewardTokensValidatorInstance.validateTokens([
                 firstRewardTokenInstance.address,
                 secondRewardTokenInstance.address,
-            ])
-        ).to.be.false;
+            ]);
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "DefaultRewardTokensValidator: invalid reward token"
+            );
+        }
     });
 
     it("should signal reward tokens as valid if a single listed token is passed in the array", async () => {
@@ -256,11 +264,9 @@ contract("DefaultRewardTokensValidator", () => {
         await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
             from: ownerAddress,
         });
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
-                firstRewardTokenInstance.address,
-            ])
-        ).to.be.true;
+        await defaultRewardTokensValidatorInstance.validateTokens([
+            firstRewardTokenInstance.address,
+        ]);
     });
 
     it("should signal reward tokens as valid if 2 listed token are passed in the array", async () => {
@@ -273,74 +279,66 @@ contract("DefaultRewardTokensValidator", () => {
         await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
             from: ownerAddress,
         });
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
-                firstRewardTokenInstance.address,
-                secondRewardTokenInstance.address,
-            ])
-        ).to.be.true;
+        await defaultRewardTokensValidatorInstance.validateTokens([
+            firstRewardTokenInstance.address,
+            secondRewardTokenInstance.address,
+        ]);
     });
 
     it("should signal reward tokens as invalid if a single listed but invalid token is passed in the array", async () => {
-        await dxTokenRegistryInstance.addList("test");
-        await dxTokenRegistryInstance.addTokens(1, [
-            firstRewardTokenInstance.address,
-        ]);
-        // mark the token as invalid
-        await dxTokenRegistryInstance.removeTokens(1, [
-            firstRewardTokenInstance.address,
-        ]);
-        await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
-            from: ownerAddress,
-        });
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
+        try {
+            await dxTokenRegistryInstance.addList("test");
+            await dxTokenRegistryInstance.addTokens(1, [
                 firstRewardTokenInstance.address,
-            ])
-        ).to.be.false;
+            ]);
+            // mark the token as invalid
+            await dxTokenRegistryInstance.removeTokens(1, [
+                firstRewardTokenInstance.address,
+            ]);
+            await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
+                1,
+                {
+                    from: ownerAddress,
+                }
+            );
+            await defaultRewardTokensValidatorInstance.validateTokens([
+                firstRewardTokenInstance.address,
+            ]);
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "DefaultRewardTokensValidator: invalid reward token"
+            );
+        }
     });
 
     it("should signal reward tokens as invalid if a single listed token is passed alongside a listed but invalid one in the array", async () => {
-        await dxTokenRegistryInstance.addList("test");
-        // list both tokens
-        await dxTokenRegistryInstance.addTokens(1, [
-            firstRewardTokenInstance.address,
-            secondRewardTokenInstance.address,
-        ]);
-        // mark the first token as invalid
-        await dxTokenRegistryInstance.removeTokens(1, [
-            firstRewardTokenInstance.address,
-        ]);
-        await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
-            from: ownerAddress,
-        });
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
+        try {
+            await dxTokenRegistryInstance.addList("test");
+            // list both tokens
+            await dxTokenRegistryInstance.addTokens(1, [
                 firstRewardTokenInstance.address,
                 secondRewardTokenInstance.address,
-            ])
-        ).to.be.false;
-    });
-
-    it("should signal reward tokens as invalid if the first passed token is passed in alongside a listed but invalid one in the array", async () => {
-        await dxTokenRegistryInstance.addList("test");
-        // list both tokens
-        await dxTokenRegistryInstance.addTokens(1, [
-            firstRewardTokenInstance.address,
-            secondRewardTokenInstance.address,
-        ]);
-        // mark the second token as invalid
-        await dxTokenRegistryInstance.removeTokens(1, [
-            secondRewardTokenInstance.address,
-        ]);
-        await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
-            from: ownerAddress,
-        });
-        expect(
-            await defaultRewardTokensValidatorInstance.areRewardTokensValid([
+            ]);
+            // mark the first token as invalid
+            await dxTokenRegistryInstance.removeTokens(1, [
+                firstRewardTokenInstance.address,
+            ]);
+            await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
+                1,
+                {
+                    from: ownerAddress,
+                }
+            );
+            await defaultRewardTokensValidatorInstance.validateTokens([
                 firstRewardTokenInstance.address,
                 secondRewardTokenInstance.address,
-            ])
-        ).to.be.false;
+            ]);
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "DefaultRewardTokensValidator: invalid reward token"
+            );
+        }
     });
 });

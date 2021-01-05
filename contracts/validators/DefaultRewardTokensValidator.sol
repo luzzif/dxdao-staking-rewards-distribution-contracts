@@ -2,11 +2,11 @@
 
 pragma solidity ^0.6.12;
 
-import "../abstraction/IRewardTokensValidator.sol";
+import "../abstraction/ITokensValidator.sol";
 import "dxdao-token-registry/contracts/dxTokenRegistry.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {
+contract DefaultRewardTokensValidator is ITokensValidator, Ownable {
     DXTokenRegistry public dxTokenRegistry;
     uint256 public dxTokenRegistryListId;
 
@@ -25,7 +25,7 @@ contract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {
         dxTokenRegistryListId = _dxTokenRegistryListId;
     }
 
-    function setDxTokenRegistryAddress(address _dxTokenRegistryAddress)
+    function setDxTokenRegistry(address _dxTokenRegistryAddress)
         external
         onlyOwner
     {
@@ -47,27 +47,28 @@ contract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {
         dxTokenRegistryListId = _dxTokenRegistryListId;
     }
 
-    function areRewardTokensValid(address[] calldata _rewardTokens)
+    function validateTokens(address[] calldata _rewardTokens)
         external
         view
         override
-        returns (bool)
     {
-        if (_rewardTokens.length == 0) {
-            return false;
-        }
+        require(
+            _rewardTokens.length > 0,
+            "DefaultRewardTokensValidator: 0-length reward tokens array"
+        );
         for (uint256 _i = 0; _i < _rewardTokens.length; _i++) {
             address _rewardToken = _rewardTokens[_i];
-            if (
-                _rewardToken == address(0) ||
-                !dxTokenRegistry.isTokenActive(
+            require(
+                _rewardToken != address(0),
+                "DefaultRewardTokensValidator: 0-address reward token"
+            );
+            require(
+                dxTokenRegistry.isTokenActive(
                     dxTokenRegistryListId,
                     _rewardToken
-                )
-            ) {
-                return false;
-            }
+                ),
+                "DefaultRewardTokensValidator: invalid reward token"
+            );
         }
-        return true;
     }
 }

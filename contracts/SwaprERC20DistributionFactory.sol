@@ -4,12 +4,11 @@ pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts/introspection/ERC165Checker.sol";
 import "erc20-staking-rewards-contracts/contracts/ERC20DistributionFactory.sol";
-import "./abstraction/IRewardTokensValidator.sol";
-import "./abstraction/IStakableTokensValidator.sol";
+import "./abstraction/ITokensValidator.sol";
 
 contract SwaprERC20DistributionFactory is ERC20DistributionFactory {
-    IRewardTokensValidator public rewardTokensValidator;
-    IStakableTokensValidator public stakableTokensValidator;
+    ITokensValidator public rewardTokensValidator;
+    ITokensValidator public stakableTokensValidator;
 
     constructor(
         address _rewardTokensValidatorAddress,
@@ -23,10 +22,8 @@ contract SwaprERC20DistributionFactory is ERC20DistributionFactory {
             _stakableTokensValidatorAddress != address(0),
             "SwaprERC20DistributionFactory: 0-address stakable tokens validator"
         );
-        rewardTokensValidator = IRewardTokensValidator(
-            _rewardTokensValidatorAddress
-        );
-        stakableTokensValidator = IStakableTokensValidator(
+        rewardTokensValidator = ITokensValidator(_rewardTokensValidatorAddress);
+        stakableTokensValidator = ITokensValidator(
             _stakableTokensValidatorAddress
         );
     }
@@ -39,9 +36,7 @@ contract SwaprERC20DistributionFactory is ERC20DistributionFactory {
             _rewardTokensValidatorAddress != address(0),
             "SwaprERC20DistributionFactory: 0-address reward tokens validator"
         );
-        rewardTokensValidator = IRewardTokensValidator(
-            _rewardTokensValidatorAddress
-        );
+        rewardTokensValidator = ITokensValidator(_rewardTokensValidatorAddress);
     }
 
     function setStakableTokensValidator(address _stakableTokensValidatorAddress)
@@ -52,7 +47,7 @@ contract SwaprERC20DistributionFactory is ERC20DistributionFactory {
             _stakableTokensValidatorAddress != address(0),
             "SwaprERC20DistributionFactory: 0-address stakable tokens validator"
         );
-        stakableTokensValidator = IStakableTokensValidator(
+        stakableTokensValidator = ITokensValidator(
             _stakableTokensValidatorAddress
         );
     }
@@ -65,16 +60,8 @@ contract SwaprERC20DistributionFactory is ERC20DistributionFactory {
         uint64 _endingTimestmp,
         bool _locked
     ) public override {
-        require(
-            rewardTokensValidator.areRewardTokensValid(_rewardTokensAddresses),
-            "SwaprERC20DistributionFactory: invalid reward tokens"
-        );
-        require(
-            stakableTokensValidator.areStakableTokensValid(
-                _stakableTokensAddresses
-            ),
-            "SwaprERC20DistributionFactory: invalid stakable tokens"
-        );
+        rewardTokensValidator.validateTokens(_rewardTokensAddresses);
+        stakableTokensValidator.validateTokens(_stakableTokensAddresses);
         ERC20DistributionFactory.createDistribution(
             _rewardTokensAddresses,
             _stakableTokensAddresses,

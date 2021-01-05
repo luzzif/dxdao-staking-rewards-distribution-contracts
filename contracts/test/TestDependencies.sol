@@ -3,6 +3,7 @@
 pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts/presets/ERC20PresetMinterPauser.sol";
+import "dxswap-core/contracts/interfaces/IDXswapFactory.sol";
 
 contract FirstRewardERC20 is ERC20PresetMinterPauser {
     constructor() public ERC20PresetMinterPauser("First reward", "RWD1") {}
