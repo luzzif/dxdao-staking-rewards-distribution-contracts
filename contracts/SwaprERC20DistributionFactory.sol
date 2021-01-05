@@ -8,8 +8,8 @@ import "./abstraction/IRewardTokensValidator.sol";
 import "./abstraction/IStakableTokensValidator.sol";
 
 contract SwaprERC20DistributionFactory is ERC20DistributionFactory {
-    IRewardTokensValidator rewardTokensValidator;
-    IStakableTokensValidator stakableTokensValidator;
+    IRewardTokensValidator public rewardTokensValidator;
+    IStakableTokensValidator public stakableTokensValidator;
 
     constructor(
         address _rewardTokensValidatorAddress,
