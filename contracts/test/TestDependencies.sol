@@ -8,6 +8,10 @@ contract FirstRewardERC20 is ERC20PresetMinterPauser {
     constructor() public ERC20PresetMinterPauser("First reward", "RWD1") {}
 }
 
+contract SecondRewardERC20 is ERC20PresetMinterPauser {
+    constructor() public ERC20PresetMinterPauser("Second reward", "RWD2") {}
+}
+
 contract FirstStakableERC20 is ERC20PresetMinterPauser {
     constructor() public ERC20PresetMinterPauser("First stakable", "STK1") {}
 }
