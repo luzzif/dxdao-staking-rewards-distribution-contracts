@@ -5,6 +5,6 @@ pragma solidity >=0.6.12;
 interface IRewardTokensValidator {
     function areRewardTokensValid(address[] calldata _rewardTokens)
         external
-        virtual
+        view
         returns (bool);
 }
