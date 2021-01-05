@@ -32,7 +32,7 @@ contract("SwaprERC20DistributionFactory", () => {
 
     beforeEach(async () => {
         const accounts = await web3.eth.getAccounts();
-        ownerAddress = accounts[0];
+        ownerAddress = accounts[1];
         dxSwapFactoryInstance = await DXswapFactory.new(
             "0x0000000000000000000000000000000000000000" // we don't care about fee to setter
         );
@@ -92,22 +92,65 @@ contract("SwaprERC20DistributionFactory", () => {
         );
     });
 
-    it("should succeed when setting a valid reward tokens validator address", async () => {
+    it("should fail when a non-owner tries to set a new reward tokens validator address", async () => {
+        try {
+            await swaprERC20DistributionFactoryInstance.setRewardTokensValidator(
+                defaultRewardTokensValidatorInstance.address
+            );
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "Ownable: caller is not the owner"
+            );
+        }
+    });
+
+    it("should succeed when an owner sets a valid reward tokens validator address", async () => {
+        expect(
+            await swaprERC20DistributionFactoryInstance.rewardTokensValidator()
+        ).to.be.equal(defaultRewardTokensValidatorInstance.address);
+        const newAddress = "0x0000000000000000000000000000000000000aBc";
         await swaprERC20DistributionFactoryInstance.setRewardTokensValidator(
-            defaultRewardTokensValidatorInstance.address
+            newAddress,
+            { from: ownerAddress }
         );
+        expect(
+            await swaprERC20DistributionFactoryInstance.rewardTokensValidator()
+        ).to.be.equal(newAddress);
+    });
+
+    it("should fail when a non-owner tries to set a new stakable tokens validator address", async () => {
+        try {
+            await swaprERC20DistributionFactoryInstance.setStakableTokensValidator(
+                defaultRewardTokensValidatorInstance.address
+            );
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "Ownable: caller is not the owner"
+            );
+        }
     });
 
     it("should succeed when setting a valid stakable tokens validator address", async () => {
+        expect(
+            await swaprERC20DistributionFactoryInstance.stakableTokensValidator()
+        ).to.be.equal(defaultStakableTokensValidatorInstance.address);
+        const newAddress = "0x0000000000000000000000000000000000000aBc";
         await swaprERC20DistributionFactoryInstance.setStakableTokensValidator(
-            defaultStakableTokensValidatorInstance.address
+            newAddress,
+            { from: ownerAddress }
         );
+        expect(
+            await swaprERC20DistributionFactoryInstance.stakableTokensValidator()
+        ).to.be.equal(newAddress);
     });
 
     it("should fail when setting a zero address as the supported reward tokens validator", async () => {
         try {
             await swaprERC20DistributionFactoryInstance.setRewardTokensValidator(
-                "0x0000000000000000000000000000000000000000"
+                "0x0000000000000000000000000000000000000000",
+                { from: ownerAddress }
             );
             throw new Error("should have failed");
         } catch (error) {
@@ -120,7 +163,8 @@ contract("SwaprERC20DistributionFactory", () => {
     it("should fail when setting a zero address as the supported stakable tokens validator", async () => {
         try {
             await swaprERC20DistributionFactoryInstance.setStakableTokensValidator(
-                "0x0000000000000000000000000000000000000000"
+                "0x0000000000000000000000000000000000000000",
+                { from: ownerAddress }
             );
             throw new Error("should have failed");
         } catch (error) {
@@ -153,7 +197,8 @@ contract("SwaprERC20DistributionFactory", () => {
             // setting valid list on reward tokens validator
             await dxTokenRegistryInstance.addList("test");
             await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
-                1
+                1,
+                { from: ownerAddress }
             );
             await swaprERC20DistributionFactoryInstance.createDistribution(
                 [rewardTokenInstance.address],
@@ -202,11 +247,13 @@ contract("SwaprERC20DistributionFactory", () => {
                 rewardTokenInstance.address,
             ]);
             await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
-                1
+                1,
+                { from: ownerAddress }
             );
             // setting valid list on stakable tokens validator
             await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
-                1
+                1,
+                { from: ownerAddress }
             );
             await swaprERC20DistributionFactoryInstance.createDistribution(
                 [rewardTokenInstance.address],
@@ -267,10 +314,12 @@ contract("SwaprERC20DistributionFactory", () => {
             // already been done in the before each hook, but redoing it here for
             // clarity
             await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(
-                1
+                1,
+                { from: ownerAddress }
             );
             await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
-                1
+                1,
+                { from: ownerAddress }
             );
             // creating pair on swapr. Only the first token is actually listed
             const { logs } = await dxSwapFactoryInstance.createPair(
@@ -312,25 +361,34 @@ contract("SwaprERC20DistributionFactory", () => {
         // setting validation token list to correct id for validators. This has
         // already been done in the before each hook, but redoing it here for
         // clarity
-        await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1);
+        await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
+            from: ownerAddress,
+        });
         await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
-            1
+            1,
+            { from: ownerAddress }
         );
         // creating pair on swapr. Both tokens are listed
         const { logs } = await dxSwapFactoryInstance.createPair(
             firstStakableTokenInstance.address,
             secondStakableTokenInstance.address
         );
-        const createdPairAddress = logs.find(
+        const { pair: createdPairAddress } = logs.find(
             (log) => log.event === "PairCreated"
-        ).args.pair;
+        ).args;
+        const expectedToken0 =
+            parseInt(firstStakableTokenInstance.address, 16) <
+            parseInt(secondStakableTokenInstance.address, 16)
+                ? firstStakableTokenInstance.address
+                : secondStakableTokenInstance.address;
+        const expectedToken1 =
+            parseInt(firstStakableTokenInstance.address, 16) >=
+            parseInt(secondStakableTokenInstance.address, 16)
+                ? firstStakableTokenInstance.address
+                : secondStakableTokenInstance.address;
         const createdPairInstance = await DXswapPair.at(createdPairAddress);
-        expect(await createdPairInstance.token0()).to.be.equal(
-            secondStakableTokenInstance.address
-        );
-        expect(await createdPairInstance.token1()).to.be.equal(
-            firstStakableTokenInstance.address
-        );
+        expect(await createdPairInstance.token0()).to.be.equal(expectedToken0);
+        expect(await createdPairInstance.token1()).to.be.equal(expectedToken1);
         expect(await createdPairInstance.factory()).to.be.equal(
             dxSwapFactoryInstance.address
         );
@@ -339,7 +397,8 @@ contract("SwaprERC20DistributionFactory", () => {
         await rewardTokenInstance.mint(ownerAddress, rewardAmount);
         await rewardTokenInstance.approve(
             swaprERC20DistributionFactoryInstance.address,
-            rewardAmount
+            rewardAmount,
+            { from: ownerAddress }
         );
         const startingTimestamp = new BN(Math.floor(Date.now() / 1000) + 1000);
         const endingTimestamp = new BN(Math.floor(Date.now() / 1000) + 2000);
