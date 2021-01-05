@@ -7,8 +7,8 @@ import "dxdao-token-registry/contracts/dxTokenRegistry.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {
-    DXTokenRegistry dxTokenRegistry;
-    uint256 dxTokenRegistryListId;
+    DXTokenRegistry public dxTokenRegistry;
+    uint256 public dxTokenRegistryListId;
 
     constructor(address _dxTokenRegistryAddress, uint256 _dxTokenRegistryListId)
         public
@@ -25,7 +25,7 @@ contract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {
         dxTokenRegistryListId = _dxTokenRegistryListId;
     }
 
-    function setDxTokenRegistry(address _dxTokenRegistryAddress)
+    function setDxTokenRegistryAddress(address _dxTokenRegistryAddress)
         external
         onlyOwner
     {
@@ -49,6 +49,7 @@ contract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {
 
     function areRewardTokensValid(address[] calldata _rewardTokens)
         external
+        view
         override
         returns (bool)
     {

@@ -8,9 +8,9 @@ import "dxdao-token-registry/contracts/dxTokenRegistry.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract DefaultStakableTokensValidator is IStakableTokensValidator, Ownable {
-    DXTokenRegistry dxTokenRegistry;
-    uint256 dxTokenRegistryListId;
-    address dxSwapFactoryAddress;
+    DXTokenRegistry public dxTokenRegistry;
+    uint256 public dxTokenRegistryListId;
+    address public dxSwapFactoryAddress;
 
     constructor(
         address _dxTokenRegistryAddress,
@@ -69,6 +69,7 @@ contract DefaultStakableTokensValidator is IStakableTokensValidator, Ownable {
 
     function areStakableTokensValid(address[] calldata _stakableTokens)
         external
+        view
         override
         returns (bool)
     {
