@@ -3,9 +3,8 @@
     "version": "0.1.0",
     "description": "Swapr-specific contracts suite to bootstrap staking-based reward campaigns.",
     "files": [
-        "/contracts/**/*.sol",
-        "!/contracts/test/*.sol",
-        "/build/contracts/*.json"
+        "/*.sol",
+        "/build/*.json"
     ],
     "scripts": {
         "lint:eslint": "eslint \"test/**/*.js\"",
@@ -14,7 +13,9 @@
         "lint": "yarn lint:eslint && yarn lint:prettier",
         "test": "hardhat test",
         "test:coverage": "hardhat coverage",
-        "compile": "hardhat compile"
+        "compile": "rimraf ./build && rimraf ./artifacts && hardhat compile && mkdirp build && copyfiles -f -E ./artifacts/contracts/*.sol/*.json ./build && rimraf ./build/*.dbg.json",
+        "prepack": "yarn compile && copyfiles -f -E ./contracts/*.sol ./",
+        "postpack": "rimraf ./*.sol"
     },
     "author": "Federico Luzzi <fedeluzzi00@gmail.com>",
     "license": "GPL-3.0",
@@ -27,14 +28,17 @@
         "babel-eslint": "^10.1.0",
         "bn.js": "^5.1.3",
         "chai": "^4.2.0",
+        "copyfiles": "^2.4.1",
         "dxdao-token-registry": "git://github.com/nicoelzer/dxDAO-Token-Registry.git#master",
         "dxswap-core": "git://github.com/levelkdev/dxswap-core.git#v0.3.1",
         "erc20-staking-rewards-distribution-contracts": "^0.2.0",
         "eslint": "^7.13.0",
         "hardhat": "^2.0.6",
         "husky": "^4.3.0",
+        "mkdirp": "^1.0.4",
         "prettier": "^2.1.2",
         "prettier-plugin-solidity": "^1.0.0-beta.2",
+        "rimraf": "^3.0.2",
         "solhint-plugin-prettier": "^0.0.5",
         "solidity-coverage": "^0.7.13",
         "web3": "^1.3.1"

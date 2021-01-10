@@ -2,7 +2,7 @@
 
 pragma solidity ^0.6.12;
 
-import "../abstraction/IStakableTokenValidator.sol";
+import "./IStakableTokenValidator.sol";
 import "dxswap-core/contracts/interfaces/IDXswapPair.sol";
 import "dxswap-core/contracts/interfaces/IDXswapFactory.sol";
 import "dxdao-token-registry/contracts/dxTokenRegistry.sol";

@@ -2,7 +2,7 @@
 
 pragma solidity ^0.6.12;
 
-import "../abstraction/IRewardTokensValidator.sol";
+import "./IRewardTokensValidator.sol";
 import "dxdao-token-registry/contracts/dxTokenRegistry.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 

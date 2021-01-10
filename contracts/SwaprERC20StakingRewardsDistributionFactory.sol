@@ -4,8 +4,8 @@ pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts/introspection/ERC165Checker.sol";
 import "erc20-staking-rewards-distribution-contracts/ERC20StakingRewardsDistributionFactory.sol";
-import "./abstraction/IRewardTokensValidator.sol";
-import "./abstraction/IStakableTokenValidator.sol";
+import "./IRewardTokensValidator.sol";
+import "./IStakableTokenValidator.sol";
 
 contract SwaprERC20StakingRewardsDistributionFactory is
     ERC20StakingRewardsDistributionFactory
