@@ -3,10 +3,12 @@ const BN = require("bn.js");
 const { expect } = require("chai");
 const { createSwaprPair, getOrderedTokensInPair } = require("../utils");
 
-const SwaprERC20DistributionFactory = artifacts.require(
-    "SwaprERC20DistributionFactory"
+const SwaprERC20StakingRewardsDistributionFactory = artifacts.require(
+    "SwaprERC20StakingRewardsDistributionFactory"
 );
-const ERC20Distribution = artifacts.require("ERC20Distribution");
+const ERC20StakingRewardsDistribution = artifacts.require(
+    "ERC20StakingRewardsDistribution"
+);
 const FirstRewardERC20 = artifacts.require("FirstRewardERC20");
 const FirstStakableERC20 = artifacts.require("FirstStakableERC20");
 const SecondStakableERC20 = artifacts.require("SecondStakableERC20");
@@ -16,11 +18,11 @@ const DXswapPair = artifacts.require("DXswapPair");
 const DefaultRewardTokensValidator = artifacts.require(
     "DefaultRewardTokensValidator"
 );
-const DefaultStakableTokensValidator = artifacts.require(
-    "DefaultStakableTokensValidator"
+const DefaultStakableTokenValidator = artifacts.require(
+    "DefaultStakableTokenValidator"
 );
 
-contract("SwaprERC20DistributionFactory", () => {
+contract("SwaprERC20StakingRewardsDistributionFactory", () => {
     let swaprERC20DistributionFactoryInstance,
         dxTokenRegistryInstance,
         dxSwapFactoryInstance,
@@ -46,13 +48,13 @@ contract("SwaprERC20DistributionFactory", () => {
             1,
             { from: ownerAddress }
         );
-        defaultStakableTokensValidatorInstance = await DefaultStakableTokensValidator.new(
+        defaultStakableTokensValidatorInstance = await DefaultStakableTokenValidator.new(
             dxTokenRegistryInstance.address,
             1,
             dxSwapFactoryInstance.address,
             { from: ownerAddress }
         );
-        swaprERC20DistributionFactoryInstance = await SwaprERC20DistributionFactory.new(
+        swaprERC20DistributionFactoryInstance = await SwaprERC20StakingRewardsDistributionFactory.new(
             defaultRewardTokensValidatorInstance.address,
             defaultStakableTokensValidatorInstance.address,
             { from: ownerAddress }
@@ -61,28 +63,28 @@ contract("SwaprERC20DistributionFactory", () => {
 
     it("should fail when trying to deploy a factory with a 0-address reward tokens validator", async () => {
         try {
-            await SwaprERC20DistributionFactory.new(
+            await SwaprERC20StakingRewardsDistributionFactory.new(
                 "0x0000000000000000000000000000000000000000",
                 defaultStakableTokensValidatorInstance.address,
                 { from: ownerAddress }
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "SwaprERC20DistributionFactory: 0-address reward tokens validator"
+                "SwaprERC20StakingRewardsDistributionFactory: 0-address reward tokens validator"
             );
         }
     });
 
     it("should fail when trying to deploy a factory with a 0-address stakable tokens validator", async () => {
         try {
-            await SwaprERC20DistributionFactory.new(
+            await SwaprERC20StakingRewardsDistributionFactory.new(
                 defaultRewardTokensValidatorInstance.address,
                 "0x0000000000000000000000000000000000000000",
                 { from: ownerAddress }
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "SwaprERC20DistributionFactory: 0-address stakable tokens validator"
+                "SwaprERC20StakingRewardsDistributionFactory: 0-address stakable token validator"
             );
         }
     });
@@ -122,7 +124,7 @@ contract("SwaprERC20DistributionFactory", () => {
 
     it("should fail when a non-owner tries to set a new stakable tokens validator address", async () => {
         try {
-            await swaprERC20DistributionFactoryInstance.setStakableTokensValidator(
+            await swaprERC20DistributionFactoryInstance.setStakableTokenValidator(
                 defaultRewardTokensValidatorInstance.address
             );
             throw new Error("should have failed");
@@ -135,15 +137,15 @@ contract("SwaprERC20DistributionFactory", () => {
 
     it("should succeed when setting a valid stakable tokens validator address", async () => {
         expect(
-            await swaprERC20DistributionFactoryInstance.stakableTokensValidator()
+            await swaprERC20DistributionFactoryInstance.stakableTokenValidator()
         ).to.be.equal(defaultStakableTokensValidatorInstance.address);
         const newAddress = "0x0000000000000000000000000000000000000aBc";
-        await swaprERC20DistributionFactoryInstance.setStakableTokensValidator(
+        await swaprERC20DistributionFactoryInstance.setStakableTokenValidator(
             newAddress,
             { from: ownerAddress }
         );
         expect(
-            await swaprERC20DistributionFactoryInstance.stakableTokensValidator()
+            await swaprERC20DistributionFactoryInstance.stakableTokenValidator()
         ).to.be.equal(newAddress);
     });
 
@@ -156,21 +158,21 @@ contract("SwaprERC20DistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "SwaprERC20DistributionFactory: 0-address reward tokens validator"
+                "SwaprERC20StakingRewardsDistributionFactory: 0-address reward tokens validator"
             );
         }
     });
 
     it("should fail when setting a zero address as the supported stakable tokens validator", async () => {
         try {
-            await swaprERC20DistributionFactoryInstance.setStakableTokensValidator(
+            await swaprERC20DistributionFactoryInstance.setStakableTokenValidator(
                 "0x0000000000000000000000000000000000000000",
                 { from: ownerAddress }
             );
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "SwaprERC20DistributionFactory: 0-address stakable tokens validator"
+                "SwaprERC20StakingRewardsDistributionFactory: 0-address stakable token validator"
             );
         }
     });
@@ -179,7 +181,7 @@ contract("SwaprERC20DistributionFactory", () => {
         try {
             await swaprERC20DistributionFactoryInstance.createDistribution(
                 ["0x0000000000000000000000000000000000000000"],
-                ["0x0000000000000000000000000000000000000000"],
+                "0x0000000000000000000000000000000000000000",
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
@@ -203,7 +205,7 @@ contract("SwaprERC20DistributionFactory", () => {
             );
             await swaprERC20DistributionFactoryInstance.createDistribution(
                 [rewardTokenInstance.address],
-                ["0x0000000000000000000000000000000000000000"],
+                "0x0000000000000000000000000000000000000000",
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
@@ -226,7 +228,7 @@ contract("SwaprERC20DistributionFactory", () => {
             ]);
             await swaprERC20DistributionFactoryInstance.createDistribution(
                 [rewardTokenInstance.address],
-                ["0x0000000000000000000000000000000000000000"],
+                "0x0000000000000000000000000000000000000000",
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
@@ -235,7 +237,7 @@ contract("SwaprERC20DistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: 0-address stakable token"
+                "DefaultStakableTokenValidator: 0-address stakable token"
             );
         }
     });
@@ -267,7 +269,7 @@ contract("SwaprERC20DistributionFactory", () => {
             );
             await swaprERC20DistributionFactoryInstance.createDistribution(
                 [rewardTokenInstance.address],
-                [lpTokenAddress],
+                lpTokenAddress,
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
@@ -276,7 +278,7 @@ contract("SwaprERC20DistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: invalid token 0 in Swapr pair"
+                "DefaultStakableTokenValidator: invalid token 0 in Swapr pair"
             );
         }
     });
@@ -308,7 +310,7 @@ contract("SwaprERC20DistributionFactory", () => {
             );
             await swaprERC20DistributionFactoryInstance.createDistribution(
                 [rewardTokenInstance.address],
-                [lpTokenAddress],
+                lpTokenAddress,
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
@@ -317,35 +319,7 @@ contract("SwaprERC20DistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: invalid token 1 in Swapr pair"
-            );
-        }
-    });
-
-    it("should fail when trying to create a distribution with a listed stakable token that is not a swapr pair", async () => {
-        try {
-            // listing reward token so that validation passes
-            await dxTokenRegistryInstance.addList("test");
-            await dxTokenRegistryInstance.addTokens(1, [
-                rewardTokenInstance.address,
-            ]);
-            // listing the stakable token
-            await dxTokenRegistryInstance.addTokens(1, [
-                firstStakableTokenInstance.address,
-            ]);
-            // creating
-            await swaprERC20DistributionFactoryInstance.createDistribution(
-                [rewardTokenInstance.address],
-                [firstStakableTokenInstance.address],
-                ["1"],
-                Math.floor(Date.now() / 1000) + 1000,
-                Math.floor(Date.now() / 1000) + 2000,
-                false
-            );
-            throw new Error("should have failed");
-        } catch (error) {
-            expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: could not get factory address for pair"
+                "DefaultStakableTokenValidator: invalid token 1 in Swapr pair"
             );
         }
     });
@@ -402,7 +376,7 @@ contract("SwaprERC20DistributionFactory", () => {
         const duration = endingTimestamp.sub(startingTimestamp);
         await swaprERC20DistributionFactoryInstance.createDistribution(
             [rewardTokenInstance.address],
-            [createdPairAddress],
+            createdPairAddress,
             [rewardAmount],
             startingTimestamp,
             endingTimestamp,
@@ -412,7 +386,7 @@ contract("SwaprERC20DistributionFactory", () => {
         expect(
             await swaprERC20DistributionFactoryInstance.getDistributionsAmount()
         ).to.be.equalBn(new BN(1));
-        const erc20DistributionInstance = await ERC20Distribution.at(
+        const erc20DistributionInstance = await ERC20StakingRewardsDistribution.at(
             await swaprERC20DistributionFactoryInstance.distributions(0)
         );
         expect(await erc20DistributionInstance.initialized()).to.be.true;
@@ -443,9 +417,9 @@ contract("SwaprERC20DistributionFactory", () => {
         ).to.be.equalBn(new BN(rewardAmount).div(duration));
 
         // stakable token related checks
-        const onchainStakableTokens = await erc20DistributionInstance.getStakableTokens();
-        expect(onchainStakableTokens).to.have.length(1);
-        expect(onchainStakableTokens[0]).to.be.equal(createdPairAddress);
+        expect(await erc20DistributionInstance.stakableToken()).to.be.equal(
+            createdPairAddress
+        );
 
         const onchainStartingTimestamp = await erc20DistributionInstance.startingTimestamp();
         expect(onchainStartingTimestamp).to.be.equalBn(startingTimestamp);

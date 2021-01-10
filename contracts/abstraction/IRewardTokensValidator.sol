@@ -2,6 +2,6 @@
 
 pragma solidity >=0.6.12;
 
-interface ITokensValidator {
+interface IRewardTokensValidator {
     function validateTokens(address[] calldata _tokens) external view;
 }

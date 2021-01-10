@@ -29,7 +29,7 @@
         "chai": "^4.2.0",
         "dxdao-token-registry": "git://github.com/nicoelzer/dxDAO-Token-Registry.git#master",
         "dxswap-core": "git://github.com/levelkdev/dxswap-core.git#v0.3.1",
-        "erc20-staking-rewards-contracts": "git://github.com/luzzif/erc20-staking-rewards-contracts.git#master",
+        "erc20-staking-rewards-distribution-contracts": "^0.2.0",
         "eslint": "^7.13.0",
         "hardhat": "^2.0.6",
         "husky": "^4.3.0",

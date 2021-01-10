@@ -2,11 +2,11 @@
 
 pragma solidity ^0.6.12;
 
-import "../abstraction/ITokensValidator.sol";
+import "../abstraction/IRewardTokensValidator.sol";
 import "dxdao-token-registry/contracts/dxTokenRegistry.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract DefaultRewardTokensValidator is ITokensValidator, Ownable {
+contract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {
     DXTokenRegistry public dxTokenRegistry;
     uint256 public dxTokenRegistryListId;
 

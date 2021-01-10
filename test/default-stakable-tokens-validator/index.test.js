@@ -6,8 +6,8 @@ const { createSwaprPair, getOrderedTokensInPair } = require("../utils");
 const FirstStakableERC20 = artifacts.require("FirstStakableERC20");
 const SecondStakableERC20 = artifacts.require("SecondStakableERC20");
 const DXTokenRegistry = artifacts.require("DXTokenRegistry");
-const DefaultStakableTokensValidator = artifacts.require(
-    "DefaultStakableTokensValidator"
+const DefaultStakableTokenValidator = artifacts.require(
+    "DefaultStakableTokenValidator"
 );
 const DXswapFactory = artifacts.require("DXswapFactory");
 const FakeDXswapPair = artifacts.require("FakeDXswapPair");
@@ -18,7 +18,7 @@ const FailingToken1GetterDXswapPair = artifacts.require(
     "FailingToken1GetterDXswapPair"
 );
 
-contract("DefaultStakableTokensValidator", () => {
+contract("DefaultStakableTokenValidator", () => {
     let dxTokenRegistryInstance,
         dxSwapFactoryInstance,
         firstStakableTokenInstance,
@@ -37,7 +37,7 @@ contract("DefaultStakableTokensValidator", () => {
         dxSwapFactoryInstance = await DXswapFactory.new(
             "0x0000000000000000000000000000000000000000"
         );
-        defaultStakableTokensValidatorInstance = await DefaultStakableTokensValidator.new(
+        defaultStakableTokensValidatorInstance = await DefaultStakableTokenValidator.new(
             dxTokenRegistryInstance.address,
             1,
             dxSwapFactoryInstance.address,
@@ -47,7 +47,7 @@ contract("DefaultStakableTokensValidator", () => {
 
     it("should fail when trying to deploy the contract with a 0-address token registry", async () => {
         try {
-            await DefaultStakableTokensValidator.new(
+            await DefaultStakableTokenValidator.new(
                 "0x0000000000000000000000000000000000000000",
                 1,
                 dxSwapFactoryInstance.address,
@@ -55,14 +55,14 @@ contract("DefaultStakableTokensValidator", () => {
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: 0-address token registry address"
+                "DefaultStakableTokenValidator: 0-address token registry address"
             );
         }
     });
 
     it("should fail when trying to deploy the contract with an invalid token list id", async () => {
         try {
-            await DefaultStakableTokensValidator.new(
+            await DefaultStakableTokenValidator.new(
                 dxTokenRegistryInstance.address,
                 0,
                 dxSwapFactoryInstance.address,
@@ -70,14 +70,14 @@ contract("DefaultStakableTokensValidator", () => {
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: invalid token list id"
+                "DefaultStakableTokenValidator: invalid token list id"
             );
         }
     });
 
     it("should fail when trying to deploy the contract with a 0-address factory address", async () => {
         try {
-            await DefaultStakableTokensValidator.new(
+            await DefaultStakableTokenValidator.new(
                 dxTokenRegistryInstance.address,
                 1,
                 "0x0000000000000000000000000000000000000000",
@@ -85,13 +85,13 @@ contract("DefaultStakableTokensValidator", () => {
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: 0-address factory address"
+                "DefaultStakableTokenValidator: 0-address factory address"
             );
         }
     });
 
     it("should succeed when trying to deploy the contract with an valid token registry address, token list id and factory", async () => {
-        const instance = await DefaultStakableTokensValidator.new(
+        const instance = await DefaultStakableTokenValidator.new(
             dxTokenRegistryInstance.address,
             1,
             dxSwapFactoryInstance.address,
@@ -128,7 +128,7 @@ contract("DefaultStakableTokensValidator", () => {
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: 0-address token registry address"
+                "DefaultStakableTokenValidator: 0-address token registry address"
             );
         }
     });
@@ -169,7 +169,7 @@ contract("DefaultStakableTokensValidator", () => {
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: invalid token list id"
+                "DefaultStakableTokenValidator: invalid token list id"
             );
         }
     });
@@ -208,7 +208,7 @@ contract("DefaultStakableTokensValidator", () => {
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: 0-address factory address"
+                "DefaultStakableTokenValidator: 0-address factory address"
             );
         }
     });
@@ -227,97 +227,15 @@ contract("DefaultStakableTokensValidator", () => {
         ).to.be.equal(newAddress);
     });
 
-    it("should signal stakable tokens as invalid if an empty array is passed", async () => {
-        try {
-            await defaultStakableTokensValidatorInstance.validateTokens([]);
-            throw new Error("should have failed");
-        } catch (error) {
-            expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: 0-length stakable tokens array"
-            );
-        }
-    });
-
     it("should signal stakable tokens as invalid if a single 0-address token is passed in the array", async () => {
         try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                "0x0000000000000000000000000000000000000000",
-            ]);
-            throw new Error("should have failed");
-        } catch (error) {
-            expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: 0-address stakable token"
+            await defaultStakableTokensValidatorInstance.validateToken(
+                "0x0000000000000000000000000000000000000000"
             );
-        }
-    });
-
-    it("should signal stakable tokens as invalid if a single 0-address token is passed in the array after a non-0-address token", async () => {
-        // the tokens that form the pair must both be listed
-        await dxTokenRegistryInstance.addList("test");
-        await dxTokenRegistryInstance.addTokens(1, [
-            firstStakableTokenInstance.address,
-        ]);
-        await dxTokenRegistryInstance.addTokens(1, [
-            secondStakableTokenInstance.address,
-        ]);
-        // the first token needs to be valid, so we created a swapr pair
-        const lpTokenAddress = await createSwaprPair(
-            dxSwapFactoryInstance,
-            firstStakableTokenInstance.address,
-            secondStakableTokenInstance.address
-        );
-        await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
-            1,
-            { from: ownerAddress }
-        );
-        try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                lpTokenAddress,
-                "0x0000000000000000000000000000000000000000",
-            ]);
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: 0-address stakable token"
-            );
-        }
-    });
-
-    it("should signal stakable tokens as invalid if a single non-lp token is passed in the array", async () => {
-        try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                firstStakableTokenInstance.address,
-            ]);
-            throw new Error("should have failed");
-        } catch (error) {
-            expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: could not get factory address for pair"
-            );
-        }
-    });
-
-    it("should signal stakable tokens as invalid if a single non-lp token is passed in the array after a correct one", async () => {
-        await dxTokenRegistryInstance.addList("test");
-        await dxTokenRegistryInstance.addTokens(1, [
-            firstStakableTokenInstance.address,
-        ]);
-        await dxTokenRegistryInstance.addTokens(1, [
-            secondStakableTokenInstance.address,
-        ]);
-        const lpTokenAddress = await createSwaprPair(
-            dxSwapFactoryInstance,
-            firstStakableTokenInstance.address,
-            secondStakableTokenInstance.address
-        );
-        try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                lpTokenAddress,
-                firstStakableTokenInstance.address,
-            ]);
-            throw new Error("should have failed");
-        } catch (error) {
-            expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: could not get factory address for pair"
+                "DefaultStakableTokenValidator: 0-address stakable token"
             );
         }
     });
@@ -343,51 +261,13 @@ contract("DefaultStakableTokensValidator", () => {
             { from: ownerAddress }
         );
         try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                lpTokenAddress,
-            ]);
-            throw new Error("should have failed");
-        } catch (error) {
-            expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: invalid factory address for stakable token"
+            await defaultStakableTokensValidatorInstance.validateToken(
+                lpTokenAddress
             );
-        }
-    });
-
-    it("should signal stakable tokens as invalid if a valid stakable token is passed in alongside an invalid-factory token in the array", async () => {
-        const fakeDxswapFactoryInstance = await DXswapFactory.new(
-            "0x0000000000000000000000000000000000000000"
-        );
-        await dxTokenRegistryInstance.addList("test");
-        await dxTokenRegistryInstance.addTokens(1, [
-            firstStakableTokenInstance.address,
-        ]);
-        await dxTokenRegistryInstance.addTokens(1, [
-            secondStakableTokenInstance.address,
-        ]);
-        const fakeLpTokenAddress = await createSwaprPair(
-            fakeDxswapFactoryInstance,
-            firstStakableTokenInstance.address,
-            secondStakableTokenInstance.address
-        );
-        const validLpTokenAddress = await createSwaprPair(
-            dxSwapFactoryInstance,
-            firstStakableTokenInstance.address,
-            secondStakableTokenInstance.address
-        );
-        await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
-            1,
-            { from: ownerAddress }
-        );
-        try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                validLpTokenAddress,
-                fakeLpTokenAddress,
-            ]);
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: invalid factory address for stakable token"
+                "DefaultStakableTokenValidator: pair not registered in factory"
             );
         }
     });
@@ -410,13 +290,13 @@ contract("DefaultStakableTokensValidator", () => {
             { from: ownerAddress }
         );
         try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                lpTokenAddress,
-            ]);
+            await defaultStakableTokensValidatorInstance.validateToken(
+                lpTokenAddress
+            );
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: invalid token 1 in Swapr pair"
+                "DefaultStakableTokenValidator: invalid token 1 in Swapr pair"
             );
         }
     });
@@ -439,13 +319,13 @@ contract("DefaultStakableTokensValidator", () => {
             { from: ownerAddress }
         );
         try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                lpTokenAddress,
-            ]);
+            await defaultStakableTokensValidatorInstance.validateToken(
+                lpTokenAddress
+            );
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: invalid token 0 in Swapr pair"
+                "DefaultStakableTokenValidator: invalid token 0 in Swapr pair"
             );
         }
     });
@@ -462,7 +342,6 @@ contract("DefaultStakableTokensValidator", () => {
             token1Address,
         ]);
         const fakePairInstance = await FakeDXswapPair.new(
-            dxSwapFactoryInstance.address,
             token0Address,
             token1Address
         );
@@ -471,13 +350,13 @@ contract("DefaultStakableTokensValidator", () => {
             { from: ownerAddress }
         );
         try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                fakePairInstance.address,
-            ]);
+            await defaultStakableTokensValidatorInstance.validateToken(
+                fakePairInstance.address
+            );
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: pair not registered in factory"
+                "DefaultStakableTokenValidator: pair not registered in factory"
             );
         }
     });
@@ -494,7 +373,6 @@ contract("DefaultStakableTokensValidator", () => {
             token1Address,
         ]);
         const fakePairInstance = await FailingToken0GetterDXswapPair.new(
-            dxSwapFactoryInstance.address,
             token1Address
         );
         await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
@@ -502,13 +380,13 @@ contract("DefaultStakableTokensValidator", () => {
             { from: ownerAddress }
         );
         try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                fakePairInstance.address,
-            ]);
+            await defaultStakableTokensValidatorInstance.validateToken(
+                fakePairInstance.address
+            );
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: could not get token0 for pair"
+                "DefaultStakableTokenValidator: could not get token0 for pair"
             );
         }
     });
@@ -525,7 +403,6 @@ contract("DefaultStakableTokensValidator", () => {
             token1Address,
         ]);
         const fakePairInstance = await FailingToken1GetterDXswapPair.new(
-            dxSwapFactoryInstance.address,
             token0Address
         );
         await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
@@ -533,13 +410,13 @@ contract("DefaultStakableTokensValidator", () => {
             { from: ownerAddress }
         );
         try {
-            await defaultStakableTokensValidatorInstance.validateTokens([
-                fakePairInstance.address,
-            ]);
+            await defaultStakableTokensValidatorInstance.validateToken(
+                fakePairInstance.address
+            );
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokensValidator: could not get token1 for pair"
+                "DefaultStakableTokenValidator: could not get token1 for pair"
             );
         }
     });
@@ -567,8 +444,8 @@ contract("DefaultStakableTokensValidator", () => {
             1,
             { from: ownerAddress }
         );
-        await defaultStakableTokensValidatorInstance.validateTokens([
-            lpTokenAddress,
-        ]);
+        await defaultStakableTokensValidatorInstance.validateToken(
+            lpTokenAddress
+        );
     });
 });

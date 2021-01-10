@@ -3055,9 +3055,10 @@ env-paths@^2.2.0:
   resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-2.2.0.tgz#cdca557dc009152917d6166e2febe1f039685e43"
   integrity sha512-6u0VYSCo/OW6IoD5WCLLy9JUGARbamfSavcNXry/eu8aHVFei6CD3Sw+VGX5alea1i9pgPHW0mbu6Xj0uBh7gA==
 
-"erc20-staking-rewards-contracts@git://github.com/luzzif/erc20-staking-rewards-contracts.git#master":
-  version "0.1.0"
-  resolved "git://github.com/luzzif/erc20-staking-rewards-contracts.git#f9f92fe34555314a730bd1d524cc1dd0d4b8c599"
+erc20-staking-rewards-distribution-contracts@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/erc20-staking-rewards-distribution-contracts/-/erc20-staking-rewards-distribution-contracts-0.2.0.tgz#80c4e6efdf7814073680f7994aa52511c97e4b14"
+  integrity sha512-I7mRPFyMslATEX3vyGvfjdzRM0sjnP+14OAOcM1whtYzBjIKlt1S1BjzDQ508AQKN2P67Sz7USbstcmSYQehXA==
 
 errno@~0.1.1:
   version "0.1.8"
