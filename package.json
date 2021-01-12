@@ -1,6 +1,6 @@
 {
     "name": "swapr-staking-rewards-distribution-contracts",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Swapr-specific contracts suite to bootstrap staking-based reward campaigns (for liquidity mining).",
     "files": [
         "/*.sol",
