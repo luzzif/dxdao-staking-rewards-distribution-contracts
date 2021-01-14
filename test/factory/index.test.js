@@ -55,15 +55,21 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
             { from: ownerAddress }
         );
         swaprERC20DistributionFactoryInstance = await SwaprERC20StakingRewardsDistributionFactory.new(
+            { from: ownerAddress }
+        );
+        await swaprERC20DistributionFactoryInstance.initialize(
             defaultRewardTokensValidatorInstance.address,
             defaultStakableTokensValidatorInstance.address,
             { from: ownerAddress }
         );
     });
 
-    it("should fail when trying to deploy a factory with a 0-address reward tokens validator", async () => {
+    it("should fail when trying to initialize a factory with a 0-address reward tokens validator", async () => {
         try {
-            await SwaprERC20StakingRewardsDistributionFactory.new(
+            const instance = await SwaprERC20StakingRewardsDistributionFactory.new(
+                { from: ownerAddress }
+            );
+            await instance.initialize(
                 "0x0000000000000000000000000000000000000000",
                 defaultStakableTokensValidatorInstance.address,
                 { from: ownerAddress }
@@ -75,9 +81,45 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
         }
     });
 
-    it("should fail when trying to deploy a factory with a 0-address stakable tokens validator", async () => {
+    it("should fail when a non-owner tries to initialize a factory", async () => {
         try {
-            await SwaprERC20StakingRewardsDistributionFactory.new(
+            const instance = await SwaprERC20StakingRewardsDistributionFactory.new(
+                { from: ownerAddress }
+            );
+            await instance.initialize(
+                defaultRewardTokensValidatorInstance.address,
+                "0x0000000000000000000000000000000000000000"
+            );
+        } catch (error) {
+            expect(error.message).to.contain(
+                "Ownable: caller is not the owner"
+            );
+        }
+    });
+
+    it("should fail when trying to initialize a factory with a 0-address reward tokens validator", async () => {
+        try {
+            const instance = await SwaprERC20StakingRewardsDistributionFactory.new(
+                { from: ownerAddress }
+            );
+            await instance.initialize(
+                "0x0000000000000000000000000000000000000000",
+                defaultStakableTokensValidatorInstance.address,
+                { from: ownerAddress }
+            );
+        } catch (error) {
+            expect(error.message).to.contain(
+                "SwaprERC20StakingRewardsDistributionFactory: 0-address reward tokens validator"
+            );
+        }
+    });
+
+    it("should fail when trying to initialize a factory with a 0-address stakable token validator", async () => {
+        try {
+            const instance = await SwaprERC20StakingRewardsDistributionFactory.new(
+                { from: ownerAddress }
+            );
+            await instance.initialize(
                 defaultRewardTokensValidatorInstance.address,
                 "0x0000000000000000000000000000000000000000",
                 { from: ownerAddress }
@@ -85,6 +127,44 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
         } catch (error) {
             expect(error.message).to.contain(
                 "SwaprERC20StakingRewardsDistributionFactory: 0-address stakable token validator"
+            );
+        }
+    });
+
+    it("should fail when trying to initialize for a second time", async () => {
+        try {
+            await swaprERC20DistributionFactoryInstance.initialize(
+                defaultRewardTokensValidatorInstance.address,
+                defaultStakableTokensValidatorInstance.address,
+                { from: ownerAddress }
+            );
+        } catch (error) {
+            expect(error.message).to.contain(
+                "SwaprERC20StakingRewardsDistributionFactory: already initialized"
+            );
+        }
+    });
+
+    it("should succeed initialization in the right conditions", async () => {
+        try {
+            const instance = await SwaprERC20StakingRewardsDistributionFactory.new(
+                { from: ownerAddress }
+            );
+            await instance.initialize(
+                defaultRewardTokensValidatorInstance.address,
+                defaultStakableTokensValidatorInstance.address,
+                { from: ownerAddress }
+            );
+            expect(await instance.rewardTokensValidator()).to.be.equal(
+                defaultRewardTokensValidatorInstance.address
+            );
+            expect(await instance.stakableTokenValidator()).to.be.equal(
+                defaultStakableTokensValidatorInstance.address
+            );
+            expect(await instance.initialized()).to.be.true;
+        } catch (error) {
+            expect(error.message).to.contain(
+                "SwaprERC20StakingRewardsDistributionFactory: already initialized"
             );
         }
     });
@@ -104,6 +184,20 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
         } catch (error) {
             expect(error.message).to.contain(
                 "Ownable: caller is not the owner"
+            );
+        }
+    });
+
+    it("should fail when an owner tries to set a new reward tokens validator address while not initialized", async () => {
+        try {
+            const instance = await SwaprERC20StakingRewardsDistributionFactory.new();
+            await instance.setRewardTokensValidator(
+                defaultRewardTokensValidatorInstance.address
+            );
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "SwaprERC20StakingRewardsDistributionFactory: not initialized"
             );
         }
     });
@@ -131,6 +225,20 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
         } catch (error) {
             expect(error.message).to.contain(
                 "Ownable: caller is not the owner"
+            );
+        }
+    });
+
+    it("should fail when an owner tries to set a new stakable tokens validator address on a non-initialized instance", async () => {
+        try {
+            const instance = await SwaprERC20StakingRewardsDistributionFactory.new();
+            await instance.setStakableTokenValidator(
+                defaultStakableTokensValidatorInstance.address
+            );
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "SwaprERC20StakingRewardsDistributionFactory: not initialized"
             );
         }
     });
@@ -173,6 +281,25 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
         } catch (error) {
             expect(error.message).to.contain(
                 "SwaprERC20StakingRewardsDistributionFactory: 0-address stakable token validator"
+            );
+        }
+    });
+
+    it("should fail when trying to create a distribution on a non-initialized instance", async () => {
+        try {
+            const instance = await SwaprERC20StakingRewardsDistributionFactory.new();
+            await instance.createDistribution(
+                ["0x0000000000000000000000000000000000000000"],
+                "0x0000000000000000000000000000000000000000",
+                ["1"],
+                Math.floor(Date.now() / 1000) + 1000,
+                Math.floor(Date.now() / 1000) + 2000,
+                false
+            );
+            throw new Error("should have failed");
+        } catch (error) {
+            expect(error.message).to.contain(
+                "SwaprERC20StakingRewardsDistributionFactory: not initialized"
             );
         }
     });

@@ -10,13 +10,14 @@ import "./IStakableTokenValidator.sol";
 contract SwaprERC20StakingRewardsDistributionFactory is
     ERC20StakingRewardsDistributionFactory
 {
+    bool public initialized;
     IRewardTokensValidator public rewardTokensValidator;
     IStakableTokenValidator public stakableTokenValidator;
 
-    constructor(
+    function initialize(
         address _rewardTokensValidatorAddress,
         address _stakableTokenValidatorAddress
-    ) public ERC20StakingRewardsDistributionFactory() {
+    ) public onlyOwner onlyUninitialized {
         require(
             _rewardTokensValidatorAddress != address(0),
             "SwaprERC20StakingRewardsDistributionFactory: 0-address reward tokens validator"
@@ -31,11 +32,13 @@ contract SwaprERC20StakingRewardsDistributionFactory is
         stakableTokenValidator = IStakableTokenValidator(
             _stakableTokenValidatorAddress
         );
+        initialized = true;
     }
 
     function setRewardTokensValidator(address _rewardTokensValidatorAddress)
         external
         onlyOwner
+        onlyInitialized
     {
         require(
             _rewardTokensValidatorAddress != address(0),
@@ -49,6 +52,7 @@ contract SwaprERC20StakingRewardsDistributionFactory is
     function setStakableTokenValidator(address _stakableTokenValidatorAddress)
         external
         onlyOwner
+        onlyInitialized
     {
         require(
             _stakableTokenValidatorAddress != address(0),
@@ -66,7 +70,7 @@ contract SwaprERC20StakingRewardsDistributionFactory is
         uint64 _startingTimestamp,
         uint64 _endingTimestmp,
         bool _locked
-    ) public override {
+    ) public override onlyInitialized {
         rewardTokensValidator.validateTokens(_rewardTokensAddresses);
         stakableTokenValidator.validateToken(_stakableTokenAddress);
         ERC20StakingRewardsDistributionFactory.createDistribution(
@@ -77,5 +81,21 @@ contract SwaprERC20StakingRewardsDistributionFactory is
             _endingTimestmp,
             _locked
         );
+    }
+
+    modifier onlyUninitialized() {
+        require(
+            !initialized,
+            "SwaprERC20StakingRewardsDistributionFactory: already initialized"
+        );
+        _;
+    }
+
+    modifier onlyInitialized() {
+        require(
+            initialized,
+            "SwaprERC20StakingRewardsDistributionFactory: not initialized"
+        );
+        _;
     }
 }
