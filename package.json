@@ -16,7 +16,8 @@
         "test:gasreport": "cross-env GAS_REPORT_ENABLED=true hardhat test",
         "compile": "rimraf ./build && rimraf ./artifacts && hardhat compile && mkdirp build && copyfiles -f -E ./artifacts/contracts/*.sol/*.json ./build && rimraf ./build/*.dbg.json",
         "prepack": "yarn compile && copyfiles -f -E ./contracts/*.sol ./",
-        "postpack": "rimraf ./*.sol"
+        "postpack": "rimraf ./*.sol",
+        "deploy:rinkeby": "hardhat deploy-and-verify --network rinkeby --token-registry-address 0x815d1b18f6baaeb3853b0f637475a5c2b28e2253 --token-registry-list-id 1 --factory-address 0x02f45e773436C6D96Cc73600fe94a660ec67734C"
     },
     "author": "Federico Luzzi <fedeluzzi00@gmail.com>",
     "license": "GPL-3.0",
@@ -29,6 +30,7 @@
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
+        "@nomiclabs/hardhat-etherscan": "^2.1.0",
         "@nomiclabs/hardhat-truffle5": "^2.0.0",
         "@nomiclabs/hardhat-web3": "^2.0.0",
         "babel-eslint": "^10.1.0",
@@ -36,6 +38,7 @@
         "chai": "^4.2.0",
         "copyfiles": "^2.4.1",
         "cross-env": "^7.0.3",
+        "dotenv": "^8.2.0",
         "eslint": "^7.17.0",
         "hardhat": "^2.0.7",
         "hardhat-gas-reporter": "^1.0.4",
