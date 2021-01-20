@@ -17,7 +17,8 @@
         "compile": "rimraf ./build && rimraf ./artifacts && hardhat compile && mkdirp build && copyfiles -f -E ./artifacts/contracts/*.sol/*.json ./build && rimraf ./build/*.dbg.json",
         "prepack": "yarn compile && copyfiles -f -E ./contracts/*.sol ./",
         "postpack": "rimraf ./*.sol",
-        "deploy:rinkeby": "hardhat deploy-and-verify --network rinkeby --token-registry-address 0x815d1b18f6baaeb3853b0f637475a5c2b28e2253 --token-registry-list-id 1 --factory-address 0x02f45e773436C6D96Cc73600fe94a660ec67734C"
+        "deploy:rinkeby": "hardhat deploy --network rinkeby --verify --token-registry-address 0x815d1b18f6baaeb3853b0f637475a5c2b28e2253 --token-registry-list-id 1 --factory-address 0x02f45e773436C6D96Cc73600fe94a660ec67734C",
+        "deploy:arbitrum": "hardhat deploy --network arbitrumTestnetV3 --token-registry-address 0x9d6f6d86b81289e40e07fcda805c06f6e9b8f629 --token-registry-list-id 1 --factory-address 0xD020e922acB8e0235398Ec173654974eA1376c3A"
     },
     "author": "Federico Luzzi <fedeluzzi00@gmail.com>",
     "license": "GPL-3.0",
