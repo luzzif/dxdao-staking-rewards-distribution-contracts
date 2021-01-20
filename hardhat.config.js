@@ -3,7 +3,7 @@ require("@nomiclabs/hardhat-truffle5");
 require("solidity-coverage");
 require("hardhat-gas-reporter");
 require("@nomiclabs/hardhat-etherscan");
-require("./tasks/deploy-and-verify");
+require("./tasks/deploy");
 
 const infuraId = process.env.INFURA_ID;
 
@@ -15,6 +15,11 @@ module.exports = {
         rinkeby: {
             url: `https://rinkeby.infura.io/v3/${infuraId}`,
             accounts: [process.env.PRIVATE_KEY],
+        },
+        arbitrumTestnetV3: {
+            url: "https://kovan3.arbitrum.io/rpc",
+            accounts: [process.env.PRIVATE_KEY],
+            gasPrice: 0,
         },
     },
     solidity: {
