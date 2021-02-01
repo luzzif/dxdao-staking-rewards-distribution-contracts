@@ -19,7 +19,7 @@ task(
             tokenRegistryAddress,
             tokenRegistryListId,
             factoryAddress,
-            verify
+            verify,
         } = taskArguments;
 
         await hre.run("clean");
@@ -32,12 +32,6 @@ task(
             tokenRegistryAddress,
             tokenRegistryListId
         );
-        if(verify) {
-            await hre.run("verify", {
-                address: rewardTokensValidator.address,
-                constructorArguments: [tokenRegistryAddress, tokenRegistryListId],
-            });
-        }
 
         const DefaultStakableTokenValidator = hre.artifacts.require(
             "DefaultStakableTokenValidator"
@@ -47,16 +41,6 @@ task(
             tokenRegistryListId,
             factoryAddress
         );
-        if(verify) {
-            await hre.run("verify", {
-                address: stakableTokenValidator.address,
-                constructorArguments: [
-                    tokenRegistryAddress,
-                    tokenRegistryListId,
-                    factoryAddress,
-                ],
-            });
-        }
 
         const SwaprERC20StakingRewardsDistributionFactory = hre.artifacts.require(
             "SwaprERC20StakingRewardsDistributionFactory"
@@ -65,15 +49,6 @@ task(
             rewardTokensValidator.address,
             stakableTokenValidator.address
         );
-        if(verify) {
-            await hre.run("verify", {
-                address: factory.address,
-                constructorArguments: [
-                    rewardTokensValidator.address,
-                    stakableTokenValidator.address,
-                ],
-            });
-        }
 
         console.log(
             `reward tokens validator deployed at address ${rewardTokensValidator.address}`
@@ -82,5 +57,31 @@ task(
             `stakable token validator deployed at address ${stakableTokenValidator.address}`
         );
         console.log(`factory deployed at address ${factory.address}`);
-        console.log(`source code verified`);
+
+        if (verify) {
+            await hre.run("verify", {
+                address: rewardTokensValidator.address,
+                constructorArguments: [
+                    tokenRegistryAddress,
+                    tokenRegistryListId,
+                ],
+            });
+
+            await hre.run("verify", {
+                address: stakableTokenValidator.address,
+                constructorArguments: [
+                    tokenRegistryAddress,
+                    tokenRegistryListId,
+                    factoryAddress,
+                ],
+            });
+            await hre.run("verify", {
+                address: factory.address,
+                constructorArguments: [
+                    rewardTokensValidator.address,
+                    stakableTokenValidator.address,
+                ],
+            });
+            console.log(`source code verified`);
+        }
     });
