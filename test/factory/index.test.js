@@ -396,11 +396,6 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
         expect(onchainRewardTokens).to.have.length(1);
         expect(onchainRewardTokens[0]).to.be.equal(rewardTokenInstance.address);
         expect(
-            await erc20DistributionInstance.rewardTokenMultiplier(
-                rewardTokenInstance.address
-            )
-        ).to.be.equalBn(new BN(10).pow(await rewardTokenInstance.decimals()));
-        expect(
             await rewardTokenInstance.balanceOf(
                 erc20DistributionInstance.address
             )
@@ -410,11 +405,6 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
                 rewardTokenInstance.address
             )
         ).to.be.equalBn(rewardAmount);
-        expect(
-            await erc20DistributionInstance.rewardPerSecond(
-                rewardTokenInstance.address
-            )
-        ).to.be.equalBn(new BN(rewardAmount).div(duration));
 
         // stakable token related checks
         expect(await erc20DistributionInstance.stakableToken()).to.be.equal(
