@@ -3358,10 +3358,10 @@ env-paths@^2.2.0:
   resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-2.2.0.tgz#cdca557dc009152917d6166e2febe1f039685e43"
   integrity sha512-6u0VYSCo/OW6IoD5WCLLy9JUGARbamfSavcNXry/eu8aHVFei6CD3Sw+VGX5alea1i9pgPHW0mbu6Xj0uBh7gA==
 
-erc20-staking-rewards-distribution-contracts@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/erc20-staking-rewards-distribution-contracts/-/erc20-staking-rewards-distribution-contracts-0.6.0.tgz#d780ab076c49dd6a0fb9bd792d6a1e60886a5a8b"
-  integrity sha512-fYeFsNFr8s3YYUlDNKfLEdBBgWS3+gusOLv17YM1fHc7De6US5+LQmja2qpWcybtbVs9jOLsi4DcI3Z1aUDvHg==
+erc20-staking-rewards-distribution-contracts@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/erc20-staking-rewards-distribution-contracts/-/erc20-staking-rewards-distribution-contracts-0.7.0.tgz#f16b1c64da9af1de10ae8816fba4f7977e842bbe"
+  integrity sha512-9bzRIOaY0NlJfrqy+sVq+u+PK3qjuV3h03ok2TLvixQtWJN5x+Yj40gU8yH+PmoiNLFKyDQWObIEAYWg8CqouA==
   dependencies:
     "@openzeppelin/contracts" "^3.2.0"
 
