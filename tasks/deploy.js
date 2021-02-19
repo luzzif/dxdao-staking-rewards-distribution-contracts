@@ -50,14 +50,6 @@ task(
             stakableTokenValidator.address
         );
 
-        console.log(
-            `reward tokens validator deployed at address ${rewardTokensValidator.address}`
-        );
-        console.log(
-            `stakable token validator deployed at address ${stakableTokenValidator.address}`
-        );
-        console.log(`factory deployed at address ${factory.address}`);
-
         if (verify) {
             await hre.run("verify", {
                 address: rewardTokensValidator.address,
@@ -84,4 +76,12 @@ task(
             });
             console.log(`source code verified`);
         }
+
+        console.log(
+            `reward tokens validator deployed at address ${rewardTokensValidator.address}`
+        );
+        console.log(
+            `stakable token validator deployed at address ${stakableTokenValidator.address}`
+        );
+        console.log(`factory deployed at address ${factory.address}`);
     });
