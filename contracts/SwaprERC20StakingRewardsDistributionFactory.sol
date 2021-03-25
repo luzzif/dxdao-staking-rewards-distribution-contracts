@@ -65,7 +65,8 @@ contract SwaprERC20StakingRewardsDistributionFactory is
         uint256[] calldata _rewardAmounts,
         uint64 _startingTimestamp,
         uint64 _endingTimestmp,
-        bool _locked
+        bool _locked,
+        uint256 _stakingCap
     ) public override {
         rewardTokensValidator.validateTokens(_rewardTokensAddresses);
         stakableTokenValidator.validateToken(_stakableTokenAddress);
@@ -75,7 +76,8 @@ contract SwaprERC20StakingRewardsDistributionFactory is
             _rewardAmounts,
             _startingTimestamp,
             _endingTimestmp,
-            _locked
+            _locked,
+            _stakingCap
         );
     }
 }

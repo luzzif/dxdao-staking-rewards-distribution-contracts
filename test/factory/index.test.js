@@ -185,7 +185,8 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
-                false
+                false,
+                0
             );
             throw new Error("should have failed");
         } catch (error) {
@@ -209,7 +210,8 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
-                false
+                false,
+                0
             );
             throw new Error("should have failed");
         } catch (error) {
@@ -232,7 +234,8 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
-                false
+                false,
+                0
             );
             throw new Error("should have failed");
         } catch (error) {
@@ -273,7 +276,8 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
-                false
+                false,
+                0
             );
             throw new Error("should have failed");
         } catch (error) {
@@ -314,7 +318,8 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
                 ["1"],
                 Math.floor(Date.now() / 1000) + 1000,
                 Math.floor(Date.now() / 1000) + 2000,
-                false
+                false,
+                0
             );
             throw new Error("should have failed");
         } catch (error) {
@@ -381,6 +386,7 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
             startingTimestamp,
             endingTimestamp,
             false,
+            0,
             { from: ownerAddress }
         );
         expect(
