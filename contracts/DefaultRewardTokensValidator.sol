@@ -1,17 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity ^0.6.12;
+pragma solidity ^0.8.0;
 
-import "./IRewardTokensValidator.sol";
-import "dxdao-token-registry/contracts/dxTokenRegistry.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./interfaces/IRewardTokensValidator.sol";
+import "./interfaces/IDXTokenRegistry.sol";
 
 contract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {
-    DXTokenRegistry public dxTokenRegistry;
+    IDXTokenRegistry public dxTokenRegistry;
     uint256 public dxTokenRegistryListId;
 
     constructor(address _dxTokenRegistryAddress, uint256 _dxTokenRegistryListId)
-        public
     {
         require(
             _dxTokenRegistryAddress != address(0),
@@ -21,7 +20,7 @@ contract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {
             _dxTokenRegistryListId > 0,
             "DefaultRewardTokensValidator: invalid token list id"
         );
-        dxTokenRegistry = DXTokenRegistry(_dxTokenRegistryAddress);
+        dxTokenRegistry = IDXTokenRegistry(_dxTokenRegistryAddress);
         dxTokenRegistryListId = _dxTokenRegistryListId;
     }
 
@@ -33,7 +32,7 @@ contract DefaultRewardTokensValidator is IRewardTokensValidator, Ownable {
             _dxTokenRegistryAddress != address(0),
             "DefaultRewardTokensValidator: 0-address token registry address"
         );
-        dxTokenRegistry = DXTokenRegistry(_dxTokenRegistryAddress);
+        dxTokenRegistry = IDXTokenRegistry(_dxTokenRegistryAddress);
     }
 
     function setDxTokenRegistryListId(uint256 _dxTokenRegistryListId)

@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity ^0.6.12;
+pragma solidity ^0.8.0;
 
-import "./IStakableTokenValidator.sol";
+import "./interfaces/IStakableTokenValidator.sol";
+import "./interfaces/IDXTokenRegistry.sol";
 import "dxswap-core/contracts/interfaces/IDXswapPair.sol";
 import "dxswap-core/contracts/interfaces/IDXswapFactory.sol";
-import "dxdao-token-registry/contracts/dxTokenRegistry.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
-    DXTokenRegistry public dxTokenRegistry;
+    IDXTokenRegistry public dxTokenRegistry;
     uint256 public dxTokenRegistryListId;
     IDXswapFactory public dxSwapFactory;
 
@@ -17,7 +17,7 @@ contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
         address _dxTokenRegistryAddress,
         uint256 _dxTokenRegistryListId,
         address _dxSwapFactoryAddress
-    ) public {
+    ) {
         require(
             _dxTokenRegistryAddress != address(0),
             "DefaultStakableTokenValidator: 0-address token registry address"
@@ -30,7 +30,7 @@ contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
             _dxSwapFactoryAddress != address(0),
             "DefaultStakableTokenValidator: 0-address factory address"
         );
-        dxTokenRegistry = DXTokenRegistry(_dxTokenRegistryAddress);
+        dxTokenRegistry = IDXTokenRegistry(_dxTokenRegistryAddress);
         dxTokenRegistryListId = _dxTokenRegistryListId;
         dxSwapFactory = IDXswapFactory(_dxSwapFactoryAddress);
     }
@@ -43,7 +43,7 @@ contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
             _dxTokenRegistryAddress != address(0),
             "DefaultStakableTokenValidator: 0-address token registry address"
         );
-        dxTokenRegistry = DXTokenRegistry(_dxTokenRegistryAddress);
+        dxTokenRegistry = IDXTokenRegistry(_dxTokenRegistryAddress);
     }
 
     function setDxTokenRegistryListId(uint256 _dxTokenRegistryListId)

@@ -19,7 +19,7 @@ contract FailingToken0GetterDXswapPair {
         token1 = _token1;
     }
 
-    function token0() external view returns (address) {
+    function token0() external pure returns (address) {
         revert("failed");
     }
 }
@@ -31,7 +31,7 @@ contract FailingToken1GetterDXswapPair {
         token0 = _token0;
     }
 
-    function token1() external view returns (address) {
+    function token1() external pure returns (address) {
         revert("failed");
     }
 }

@@ -24,6 +24,7 @@ const DefaultStakableTokenValidator = artifacts.require(
 
 contract("SwaprERC20StakingRewardsDistributionFactory", () => {
     let swaprERC20DistributionFactoryInstance,
+        erc20DistributionImplementationInstance,
         dxTokenRegistryInstance,
         dxSwapFactoryInstance,
         rewardTokenInstance,
@@ -54,39 +55,13 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
             dxSwapFactoryInstance.address,
             { from: ownerAddress }
         );
+        erc20DistributionImplementationInstance = await ERC20StakingRewardsDistribution.new();
         swaprERC20DistributionFactoryInstance = await SwaprERC20StakingRewardsDistributionFactory.new(
             defaultRewardTokensValidatorInstance.address,
             defaultStakableTokensValidatorInstance.address,
+            erc20DistributionImplementationInstance.address,
             { from: ownerAddress }
         );
-    });
-
-    it("should fail when trying to deploy a factory with a 0-address reward tokens validator", async () => {
-        try {
-            await SwaprERC20StakingRewardsDistributionFactory.new(
-                "0x0000000000000000000000000000000000000000",
-                defaultStakableTokensValidatorInstance.address,
-                { from: ownerAddress }
-            );
-        } catch (error) {
-            expect(error.message).to.contain(
-                "SwaprERC20StakingRewardsDistributionFactory: 0-address reward tokens validator"
-            );
-        }
-    });
-
-    it("should fail when trying to deploy a factory with a 0-address stakable tokens validator", async () => {
-        try {
-            await SwaprERC20StakingRewardsDistributionFactory.new(
-                defaultRewardTokensValidatorInstance.address,
-                "0x0000000000000000000000000000000000000000",
-                { from: ownerAddress }
-            );
-        } catch (error) {
-            expect(error.message).to.contain(
-                "SwaprERC20StakingRewardsDistributionFactory: 0-address stakable token validator"
-            );
-        }
     });
 
     it("should have the expected owner", async () => {
@@ -147,34 +122,6 @@ contract("SwaprERC20StakingRewardsDistributionFactory", () => {
         expect(
             await swaprERC20DistributionFactoryInstance.stakableTokenValidator()
         ).to.be.equal(newAddress);
-    });
-
-    it("should fail when setting a zero address as the supported reward tokens validator", async () => {
-        try {
-            await swaprERC20DistributionFactoryInstance.setRewardTokensValidator(
-                "0x0000000000000000000000000000000000000000",
-                { from: ownerAddress }
-            );
-            throw new Error("should have failed");
-        } catch (error) {
-            expect(error.message).to.contain(
-                "SwaprERC20StakingRewardsDistributionFactory: 0-address reward tokens validator"
-            );
-        }
-    });
-
-    it("should fail when setting a zero address as the supported stakable tokens validator", async () => {
-        try {
-            await swaprERC20DistributionFactoryInstance.setStakableTokenValidator(
-                "0x0000000000000000000000000000000000000000",
-                { from: ownerAddress }
-            );
-            throw new Error("should have failed");
-        } catch (error) {
-            expect(error.message).to.contain(
-                "SwaprERC20StakingRewardsDistributionFactory: 0-address stakable token validator"
-            );
-        }
     });
 
     it("should fail when trying to create a distribution with 0-address reward token", async () => {
