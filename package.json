@@ -17,7 +17,7 @@
         "compile": "rimraf ./build && rimraf ./artifacts && hardhat compile && mkdirp build && copyfiles -f -E ./artifacts/contracts/*.sol/*.json ./build && rimraf ./build/*.dbg.json",
         "prepack": "yarn compile && copyfiles -f -E ./contracts/*.sol ./ && copyfiles -f -E ./contracts/interfaces/*.sol ./",
         "postpack": "rimraf ./*.sol",
-        "deploy:rinkeby:validators": "hardhat deploy --network rinkeby --verify --with-validators --token-registry-address 0x815d1b18f6baaeb3853b0f637475a5c2b28e2253 --token-registry-list-id 1 --factory-address 0x02f45e773436C6D96Cc73600fe94a660ec67734C",
+        "deploy:rinkeby:validators": "hardhat deploy --network rinkeby --verify --with-validators --token-registry-address 0xA9516C178C70cEe5ebDae5000B35411BB5894961 --token-registry-list-id 1",
         "deploy:rinkeby:no-validators": "hardhat deploy --network rinkeby --verify",
         "deploy:arbitrum": "hardhat deploy --network arbitrumTestnetV3 --token-registry-address 0x9d6f6d86b81289e40e07fcda805c06f6e9b8f629 --token-registry-list-id 1 --factory-address 0xD020e922acB8e0235398Ec173654974eA1376c3A"
     },

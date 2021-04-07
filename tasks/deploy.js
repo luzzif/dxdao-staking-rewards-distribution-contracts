@@ -10,7 +10,6 @@ task(
         "tokenRegistryListId",
         "The token registry list id to be used to validate tokens"
     )
-    .addOptionalParam("factoryAddress", "The address of Swapr's pairs factory")
     .addFlag(
         "verify",
         "Additional (and optional) Etherscan contracts verification"
@@ -19,15 +18,11 @@ task(
         const {
             tokenRegistryAddress,
             tokenRegistryListId,
-            factoryAddress,
             verify,
             withValidators,
         } = taskArguments;
 
-        if (
-            withValidators &&
-            (!tokenRegistryAddress || !tokenRegistryListId || !factoryAddress)
-        ) {
+        if (withValidators && (!tokenRegistryAddress || !tokenRegistryListId)) {
             throw new Error(
                 "token registry address/list di and factory address are required"
             );
@@ -56,8 +51,7 @@ task(
             );
             stakableTokenValidator = await DefaultStakableTokenValidator.new(
                 tokenRegistryAddress,
-                tokenRegistryListId,
-                factoryAddress
+                tokenRegistryListId
             );
         }
 
@@ -88,7 +82,6 @@ task(
                     constructorArguments: [
                         tokenRegistryAddress,
                         tokenRegistryListId,
-                        factoryAddress,
                     ],
                 });
             }
