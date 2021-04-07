@@ -11,13 +11,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
     IDXTokenRegistry public dxTokenRegistry;
     uint256 public dxTokenRegistryListId;
-    IDXswapFactory public dxSwapFactory;
 
-    constructor(
-        address _dxTokenRegistryAddress,
-        uint256 _dxTokenRegistryListId,
-        address _dxSwapFactoryAddress
-    ) {
+    constructor(address _dxTokenRegistryAddress, uint256 _dxTokenRegistryListId)
+    {
         require(
             _dxTokenRegistryAddress != address(0),
             "DefaultStakableTokenValidator: 0-address token registry address"
@@ -26,13 +22,8 @@ contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
             _dxTokenRegistryListId > 0,
             "DefaultStakableTokenValidator: invalid token list id"
         );
-        require(
-            _dxSwapFactoryAddress != address(0),
-            "DefaultStakableTokenValidator: 0-address factory address"
-        );
         dxTokenRegistry = IDXTokenRegistry(_dxTokenRegistryAddress);
         dxTokenRegistryListId = _dxTokenRegistryListId;
-        dxSwapFactory = IDXswapFactory(_dxSwapFactoryAddress);
     }
 
     function setDxTokenRegistry(address _dxTokenRegistryAddress)
@@ -55,17 +46,6 @@ contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
             "DefaultStakableTokenValidator: invalid token list id"
         );
         dxTokenRegistryListId = _dxTokenRegistryListId;
-    }
-
-    function setDxSwapFactory(address _dxSwapFactoryAddress)
-        external
-        onlyOwner
-    {
-        require(
-            _dxSwapFactoryAddress != address(0),
-            "DefaultStakableTokenValidator: 0-address factory address"
-        );
-        dxSwapFactory = IDXswapFactory(_dxSwapFactoryAddress);
     }
 
     function validateToken(address _stakableTokenAddress)
