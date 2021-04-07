@@ -1,6 +1,6 @@
 {
     "name": "dxdao-staking-rewards-distribution-contracts",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "description": "DXdao-specific contracts suite to bootstrap staking-based reward campaigns (for liquidity mining).",
     "files": [
         "/*.sol",
