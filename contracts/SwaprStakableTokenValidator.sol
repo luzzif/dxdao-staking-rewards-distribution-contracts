@@ -77,34 +77,12 @@ contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
             _stakableTokenAddress != address(0),
             "DefaultStakableTokenValidator: 0-address stakable token"
         );
-        IDXswapPair _potentialDxSwapPair = IDXswapPair(_stakableTokenAddress);
-        address _token0;
-        try _potentialDxSwapPair.token0() returns (address _fetchedToken0) {
-            _token0 = _fetchedToken0;
-        } catch {
-            revert(
-                "DefaultStakableTokenValidator: could not get token0 for pair"
-            );
-        }
         require(
-            dxTokenRegistry.isTokenActive(dxTokenRegistryListId, _token0),
-            "DefaultStakableTokenValidator: invalid token 0 in Swapr pair"
-        );
-        address _token1;
-        try _potentialDxSwapPair.token1() returns (address _fetchedToken1) {
-            _token1 = _fetchedToken1;
-        } catch {
-            revert(
-                "DefaultStakableTokenValidator: could not get token1 for pair"
-            );
-        }
-        require(
-            dxTokenRegistry.isTokenActive(dxTokenRegistryListId, _token1),
-            "DefaultStakableTokenValidator: invalid token 1 in Swapr pair"
-        );
-        require(
-            dxSwapFactory.getPair(_token0, _token1) == _stakableTokenAddress,
-            "DefaultStakableTokenValidator: pair not registered in factory"
+            dxTokenRegistry.isTokenActive(
+                dxTokenRegistryListId,
+                _stakableTokenAddress
+            ),
+            "DefaultStakableTokenValidator: invalid stakable token"
         );
     }
 }
