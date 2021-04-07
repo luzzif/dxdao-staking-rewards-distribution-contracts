@@ -1,7 +1,7 @@
 {
-    "name": "swapr-staking-rewards-distribution-contracts",
+    "name": "dxdao-staking-rewards-distribution-contracts",
     "version": "0.8.0",
-    "description": "Swapr-specific contracts suite to bootstrap staking-based reward campaigns (for liquidity mining).",
+    "description": "DXdao-specific contracts suite to bootstrap staking-based reward campaigns (for liquidity mining).",
     "files": [
         "/*.sol",
         "/build/*.json"

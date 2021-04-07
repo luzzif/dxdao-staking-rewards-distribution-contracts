@@ -6,7 +6,7 @@ import "erc20-staking-rewards-distribution-contracts/ERC20StakingRewardsDistribu
 import "./interfaces/IRewardTokensValidator.sol";
 import "./interfaces/IStakableTokenValidator.sol";
 
-contract SwaprERC20StakingRewardsDistributionFactory is
+contract DXdaoERC20StakingRewardsDistributionFactory is
     ERC20StakingRewardsDistributionFactory
 {
     IRewardTokensValidator public rewardTokensValidator;

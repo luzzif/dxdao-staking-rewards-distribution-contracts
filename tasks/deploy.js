@@ -65,10 +65,10 @@ task(
             "ERC20StakingRewardsDistribution"
         );
         const erc20DistributionImplementation = await ERC20StakingRewardsDistribution.new();
-        const SwaprERC20StakingRewardsDistributionFactory = hre.artifacts.require(
-            "SwaprERC20StakingRewardsDistributionFactory"
+        const DXdaoERC20StakingRewardsDistributionFactory = hre.artifacts.require(
+            "DXdaoERC20StakingRewardsDistributionFactory"
         );
-        const factory = await SwaprERC20StakingRewardsDistributionFactory.new(
+        const factory = await DXdaoERC20StakingRewardsDistributionFactory.new(
             rewardTokensValidator.address,
             stakableTokenValidator.address,
             erc20DistributionImplementation.address

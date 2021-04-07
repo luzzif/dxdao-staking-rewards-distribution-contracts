@@ -1,29 +1,30 @@
-# Swapr staking rewards distribution contracts
+# DXdao staking rewards distribution contracts
 
-A contract suite to bootstrap staking-based reward campaigns on Swapr (to
-bootstrap liquidity mining campaigns).
+A contract suite to bootstrap staking-based reward campaigns on DXdao products
+(to bootstrap liquidity mining campaigns). Can be used for example on Swapr or
+Omen.
 
 ## Getting started
 
-To use `swapr-staking-rewards-distribution-contracts` in your project (for
+To use `dxdao-staking-rewards-distribution-contracts` in your project (for
 example to extend the functionality of either the distribution contract or the
 factory or to simply easily access the contracts' ABI), simply run:
 
 ```
-yarn add -D `swapr-staking-rewards-distribution-contracts`
+yarn add -D `dxdao-staking-rewards-distribution-contracts`
 ```
 
 Built artifacts (containing ABI and bytecode) can be imported in the following
 way:
 
 ```js
-const factoryArtifact = require("swapr-staking-rewards-distribution-contracts/build/SwaprERC20StakingRewardsDistributionFactory.json");
+const factoryArtifact = require("dxdao-staking-rewards-distribution-contracts/build/DXdaoERC20StakingRewardsDistributionFactory.json");
 ```
 
 Solidity source code can be imported in the following way:
 
 ```js
-import "swapr-staking-rewards-distribution-contracts/SwaprERC20StakingRewardsDistributionFactory.sol";
+import "dxdao-staking-rewards-distribution-contracts/DXdaoERC20StakingRewardsDistributionFactory.sol";
 ```
 
 ## Development
