@@ -2,20 +2,14 @@
 
 pragma solidity >=0.8.0;
 
-interface IDXdaoERC20StakingRewardsDistributionFactory {
+import "erc20-staking-rewards-distribution-contracts/IERC20StakingRewardsDistributionFactory.sol";
+
+interface IDXdaoERC20StakingRewardsDistributionFactory is
+    IERC20StakingRewardsDistributionFactory
+{
     function setRewardTokensValidator(address _rewardTokensValidatorAddress)
         external;
 
     function setStakableTokenValidator(address _stakableTokenValidatorAddress)
         external;
-
-    function createDistribution(
-        address[] calldata _rewardTokensAddresses,
-        address _stakableTokenAddress,
-        uint256[] calldata _rewardAmounts,
-        uint64 _startingTimestamp,
-        uint64 _endingTimestmp,
-        bool _locked,
-        uint256 _stakingCap
-    ) external;
 }
