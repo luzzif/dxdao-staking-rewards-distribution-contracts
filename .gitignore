@@ -10,3 +10,4 @@ yarn-error.log
 /*.sol
 *.tgz
 .env*
+interfaces/
