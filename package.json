@@ -4,6 +4,7 @@
     "description": "DXdao-specific contracts suite to bootstrap staking-based reward campaigns (for liquidity mining).",
     "files": [
         "/*.sol",
+        "interfaces/*.sol",
         "/build/*.json"
     ],
     "scripts": {
