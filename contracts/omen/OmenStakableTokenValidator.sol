@@ -2,13 +2,13 @@
 
 pragma solidity ^0.8.0;
 
-import "./interfaces/IStakableTokenValidator.sol";
-import "./interfaces/IDXTokenRegistry.sol";
+import "../interfaces/IStakableTokenValidator.sol";
+import "../interfaces/IDXTokenRegistry.sol";
 import "dxswap-core/contracts/interfaces/IDXswapPair.sol";
 import "dxswap-core/contracts/interfaces/IDXswapFactory.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
+contract OmenStakableTokenValidator is IStakableTokenValidator, Ownable {
     IDXTokenRegistry public dxTokenRegistry;
     uint256 public dxTokenRegistryListId;
 
@@ -16,11 +16,11 @@ contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
     {
         require(
             _dxTokenRegistryAddress != address(0),
-            "DefaultStakableTokenValidator: 0-address token registry address"
+            "OmenStakableTokenValidator: 0-address token registry address"
         );
         require(
             _dxTokenRegistryListId > 0,
-            "DefaultStakableTokenValidator: invalid token list id"
+            "OmenStakableTokenValidator: invalid token list id"
         );
         dxTokenRegistry = IDXTokenRegistry(_dxTokenRegistryAddress);
         dxTokenRegistryListId = _dxTokenRegistryListId;
@@ -32,7 +32,7 @@ contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
     {
         require(
             _dxTokenRegistryAddress != address(0),
-            "DefaultStakableTokenValidator: 0-address token registry address"
+            "OmenStakableTokenValidator: 0-address token registry address"
         );
         dxTokenRegistry = IDXTokenRegistry(_dxTokenRegistryAddress);
     }
@@ -43,7 +43,7 @@ contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
     {
         require(
             _dxTokenRegistryListId > 0,
-            "DefaultStakableTokenValidator: invalid token list id"
+            "OmenStakableTokenValidator: invalid token list id"
         );
         dxTokenRegistryListId = _dxTokenRegistryListId;
     }
@@ -55,14 +55,14 @@ contract DefaultStakableTokenValidator is IStakableTokenValidator, Ownable {
     {
         require(
             _stakableTokenAddress != address(0),
-            "DefaultStakableTokenValidator: 0-address stakable token"
+            "OmenStakableTokenValidator: 0-address stakable token"
         );
         require(
             dxTokenRegistry.isTokenActive(
                 dxTokenRegistryListId,
                 _stakableTokenAddress
             ),
-            "DefaultStakableTokenValidator: invalid stakable token"
+            "OmenStakableTokenValidator: invalid stakable token"
         );
     }
 }
