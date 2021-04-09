@@ -1,15 +1,15 @@
-require("../utils/assertion");
+require("../../utils/assertion");
 const BN = require("bn.js");
 const { expect } = require("chai");
 
 const DXTokenRegistry = artifacts.require("DXTokenRegistry");
-const DefaultStakableTokenValidator = artifacts.require(
-    "DefaultStakableTokenValidator"
+const OmenStakableTokenValidator = artifacts.require(
+    "OmenStakableTokenValidator"
 );
 
-contract("DefaultStakableTokenValidator", () => {
+contract("OmenStakableTokenValidator", () => {
     let dxTokenRegistryInstance,
-        defaultStakableTokensValidatorInstance,
+        omenStakableTokensValidatorInstance,
         ownerAddress,
         randomAddress;
 
@@ -18,7 +18,7 @@ contract("DefaultStakableTokenValidator", () => {
         ownerAddress = accounts[1];
         randomAddress = accounts[0];
         dxTokenRegistryInstance = await DXTokenRegistry.new();
-        defaultStakableTokensValidatorInstance = await DefaultStakableTokenValidator.new(
+        omenStakableTokensValidatorInstance = await OmenStakableTokenValidator.new(
             dxTokenRegistryInstance.address,
             1,
             { from: ownerAddress }
@@ -27,34 +27,34 @@ contract("DefaultStakableTokenValidator", () => {
 
     it("should fail when trying to deploy the contract with a 0-address token registry", async () => {
         try {
-            await DefaultStakableTokenValidator.new(
+            await OmenStakableTokenValidator.new(
                 "0x0000000000000000000000000000000000000000",
                 1,
                 { from: ownerAddress }
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokenValidator: 0-address token registry address"
+                "OmenStakableTokenValidator: 0-address token registry address"
             );
         }
     });
 
     it("should fail when trying to deploy the contract with an invalid token list id", async () => {
         try {
-            await DefaultStakableTokenValidator.new(
+            await OmenStakableTokenValidator.new(
                 dxTokenRegistryInstance.address,
                 0,
                 { from: ownerAddress }
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokenValidator: invalid token list id"
+                "OmenStakableTokenValidator: invalid token list id"
             );
         }
     });
 
     it("should succeed when trying to deploy the contract with a valid token registry address and token list id", async () => {
-        const instance = await DefaultStakableTokenValidator.new(
+        const instance = await OmenStakableTokenValidator.new(
             dxTokenRegistryInstance.address,
             1,
             { from: ownerAddress }
@@ -68,7 +68,7 @@ contract("DefaultStakableTokenValidator", () => {
 
     it("should fail when a non-owner tries to set a new dx token registry address", async () => {
         try {
-            await defaultStakableTokensValidatorInstance.setDxTokenRegistry(
+            await omenStakableTokensValidatorInstance.setDxTokenRegistry(
                 dxTokenRegistryInstance.address,
                 { from: randomAddress }
             );
@@ -81,35 +81,35 @@ contract("DefaultStakableTokenValidator", () => {
 
     it("should fail when the owner tries to set a 0-address dx token registry", async () => {
         try {
-            await defaultStakableTokensValidatorInstance.setDxTokenRegistry(
+            await omenStakableTokensValidatorInstance.setDxTokenRegistry(
                 "0x0000000000000000000000000000000000000000",
                 { from: ownerAddress }
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokenValidator: 0-address token registry address"
+                "OmenStakableTokenValidator: 0-address token registry address"
             );
         }
     });
 
     it("should succeed when the owner tries to set a valid address as the dx token registry one", async () => {
         expect(
-            await defaultStakableTokensValidatorInstance.dxTokenRegistry()
+            await omenStakableTokensValidatorInstance.dxTokenRegistry()
         ).to.be.equal(dxTokenRegistryInstance.address);
         const newDxTokenRegistryAddress =
             "0x0000000000000000000000000000000000000aBc";
-        await defaultStakableTokensValidatorInstance.setDxTokenRegistry(
+        await omenStakableTokensValidatorInstance.setDxTokenRegistry(
             newDxTokenRegistryAddress,
             { from: ownerAddress }
         );
         expect(
-            await defaultStakableTokensValidatorInstance.dxTokenRegistry()
+            await omenStakableTokensValidatorInstance.dxTokenRegistry()
         ).to.be.equal(newDxTokenRegistryAddress);
     });
 
     it("should fail when a non-owner tries to set a new token list id", async () => {
         try {
-            await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
+            await omenStakableTokensValidatorInstance.setDxTokenRegistryListId(
                 1,
                 { from: randomAddress }
             );
@@ -122,39 +122,38 @@ contract("DefaultStakableTokenValidator", () => {
 
     it("should fail when the owner tries to set an invalid token list id", async () => {
         try {
-            await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
+            await omenStakableTokensValidatorInstance.setDxTokenRegistryListId(
                 0,
                 { from: ownerAddress }
             );
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokenValidator: invalid token list id"
+                "OmenStakableTokenValidator: invalid token list id"
             );
         }
     });
 
     it("should succeed when the owner tries to set a valid token list id", async () => {
         expect(
-            await defaultStakableTokensValidatorInstance.dxTokenRegistryListId()
+            await omenStakableTokensValidatorInstance.dxTokenRegistryListId()
         ).to.be.equalBn(new BN(1));
-        await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
-            10,
-            { from: ownerAddress }
-        );
+        await omenStakableTokensValidatorInstance.setDxTokenRegistryListId(10, {
+            from: ownerAddress,
+        });
         expect(
-            await defaultStakableTokensValidatorInstance.dxTokenRegistryListId()
+            await omenStakableTokensValidatorInstance.dxTokenRegistryListId()
         ).to.be.equalBn(new BN(10));
     });
 
     it("should signal stakable tokens as invalid if a 0-address token is passed", async () => {
         try {
-            await defaultStakableTokensValidatorInstance.validateToken(
+            await omenStakableTokensValidatorInstance.validateToken(
                 "0x0000000000000000000000000000000000000000"
             );
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokenValidator: 0-address stakable token"
+                "OmenStakableTokenValidator: 0-address stakable token"
             );
         }
     });

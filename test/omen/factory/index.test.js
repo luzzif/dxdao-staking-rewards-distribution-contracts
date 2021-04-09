@@ -1,4 +1,4 @@
-require("../utils/assertion");
+require("../../utils/assertion");
 const { expect } = require("chai");
 
 const DXdaoERC20StakingRewardsDistributionFactory = artifacts.require(
@@ -12,8 +12,8 @@ const DXTokenRegistry = artifacts.require("DXTokenRegistry");
 const DefaultRewardTokensValidator = artifacts.require(
     "DefaultRewardTokensValidator"
 );
-const DefaultStakableTokenValidator = artifacts.require(
-    "DefaultStakableTokenValidator"
+const OmenStakableTokenValidator = artifacts.require(
+    "OmenStakableTokenValidator"
 );
 
 contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
@@ -22,7 +22,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
         dxTokenRegistryInstance,
         rewardTokenInstance,
         defaultRewardTokensValidatorInstance,
-        defaultStakableTokensValidatorInstance,
+        omenStakableTokensValidatorInstance,
         ownerAddress;
 
     beforeEach(async () => {
@@ -35,7 +35,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
             1,
             { from: ownerAddress }
         );
-        defaultStakableTokensValidatorInstance = await DefaultStakableTokenValidator.new(
+        omenStakableTokensValidatorInstance = await OmenStakableTokenValidator.new(
             dxTokenRegistryInstance.address,
             1,
             { from: ownerAddress }
@@ -43,7 +43,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
         erc20DistributionImplementationInstance = await ERC20StakingRewardsDistribution.new();
         dxDaoERC20DistributionFactoryInstance = await DXdaoERC20StakingRewardsDistributionFactory.new(
             defaultRewardTokensValidatorInstance.address,
-            defaultStakableTokensValidatorInstance.address,
+            omenStakableTokensValidatorInstance.address,
             erc20DistributionImplementationInstance.address,
             { from: ownerAddress }
         );
@@ -98,7 +98,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
     it("should succeed when setting a valid stakable tokens validator address", async () => {
         expect(
             await dxDaoERC20DistributionFactoryInstance.stakableTokenValidator()
-        ).to.be.equal(defaultStakableTokensValidatorInstance.address);
+        ).to.be.equal(omenStakableTokensValidatorInstance.address);
         const newAddress = "0x0000000000000000000000000000000000000aBc";
         await dxDaoERC20DistributionFactoryInstance.setStakableTokenValidator(
             newAddress,
@@ -172,7 +172,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokenValidator: 0-address stakable token"
+                "OmenStakableTokenValidator: 0-address stakable token"
             );
         }
     });
