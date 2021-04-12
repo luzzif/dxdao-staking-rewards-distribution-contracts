@@ -32,6 +32,7 @@ contract("OmenStakableTokenValidator", () => {
                 1,
                 { from: ownerAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "OmenStakableTokenValidator: 0-address token registry address"
@@ -46,6 +47,7 @@ contract("OmenStakableTokenValidator", () => {
                 0,
                 { from: ownerAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "OmenStakableTokenValidator: invalid token list id"
@@ -72,6 +74,7 @@ contract("OmenStakableTokenValidator", () => {
                 dxTokenRegistryInstance.address,
                 { from: randomAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "Ownable: caller is not the owner"
@@ -85,6 +88,7 @@ contract("OmenStakableTokenValidator", () => {
                 "0x0000000000000000000000000000000000000000",
                 { from: ownerAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "OmenStakableTokenValidator: 0-address token registry address"
@@ -113,6 +117,7 @@ contract("OmenStakableTokenValidator", () => {
                 1,
                 { from: randomAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "Ownable: caller is not the owner"
@@ -126,6 +131,7 @@ contract("OmenStakableTokenValidator", () => {
                 0,
                 { from: ownerAddress }
             );
+            throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
                 "OmenStakableTokenValidator: invalid token list id"
