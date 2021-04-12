@@ -1,7 +1,7 @@
-require("../utils/assertion");
+require("../../utils/assertion");
 const BN = require("bn.js");
 const { expect } = require("chai");
-const { createSwaprPair, getOrderedTokensInPair } = require("../utils");
+const { createSwaprPair, getOrderedTokensInPair } = require("../../utils");
 
 const DXdaoERC20StakingRewardsDistributionFactory = artifacts.require(
     "DXdaoERC20StakingRewardsDistributionFactory"
@@ -18,8 +18,8 @@ const DXswapPair = artifacts.require("DXswapPair");
 const DefaultRewardTokensValidator = artifacts.require(
     "DefaultRewardTokensValidator"
 );
-const DefaultStakableTokenValidator = artifacts.require(
-    "DefaultStakableTokenValidator"
+const SwaprStakableTokenValidator = artifacts.require(
+    "SwaprStakableTokenValidator"
 );
 
 contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
@@ -31,7 +31,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
         firstStakableTokenInstance,
         secondStakableTokenInstance,
         defaultRewardTokensValidatorInstance,
-        defaultStakableTokensValidatorInstance,
+        swaprStakableTokensValidatorInstance,
         ownerAddress;
 
     beforeEach(async () => {
@@ -49,7 +49,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
             1,
             { from: ownerAddress }
         );
-        defaultStakableTokensValidatorInstance = await DefaultStakableTokenValidator.new(
+        swaprStakableTokensValidatorInstance = await SwaprStakableTokenValidator.new(
             dxTokenRegistryInstance.address,
             1,
             dxSwapFactoryInstance.address,
@@ -58,7 +58,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
         erc20DistributionImplementationInstance = await ERC20StakingRewardsDistribution.new();
         dxDaoERC20DistributionFactoryInstance = await DXdaoERC20StakingRewardsDistributionFactory.new(
             defaultRewardTokensValidatorInstance.address,
-            defaultStakableTokensValidatorInstance.address,
+            swaprStakableTokensValidatorInstance.address,
             erc20DistributionImplementationInstance.address,
             { from: ownerAddress }
         );
@@ -113,7 +113,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
     it("should succeed when setting a valid stakable tokens validator address", async () => {
         expect(
             await dxDaoERC20DistributionFactoryInstance.stakableTokenValidator()
-        ).to.be.equal(defaultStakableTokensValidatorInstance.address);
+        ).to.be.equal(swaprStakableTokensValidatorInstance.address);
         const newAddress = "0x0000000000000000000000000000000000000aBc";
         await dxDaoERC20DistributionFactoryInstance.setStakableTokenValidator(
             newAddress,
@@ -187,7 +187,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokenValidator: 0-address stakable token"
+                "SwaprStakableTokenValidator: 0-address stakable token"
             );
         }
     });
@@ -213,7 +213,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
                 token1Address
             );
             // setting valid list on stakable tokens validator
-            await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
+            await swaprStakableTokensValidatorInstance.setDxTokenRegistryListId(
                 1,
                 { from: ownerAddress }
             );
@@ -229,7 +229,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokenValidator: invalid token 0 in Swapr pair"
+                "SwaprStakableTokenValidator: invalid token 0 in Swapr pair"
             );
         }
     });
@@ -255,7 +255,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
                 token1Address
             );
             // setting valid list on stakable tokens validator
-            await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
+            await swaprStakableTokensValidatorInstance.setDxTokenRegistryListId(
                 1,
                 { from: ownerAddress }
             );
@@ -271,7 +271,7 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
             throw new Error("should have failed");
         } catch (error) {
             expect(error.message).to.contain(
-                "DefaultStakableTokenValidator: invalid token 1 in Swapr pair"
+                "SwaprStakableTokenValidator: invalid token 1 in Swapr pair"
             );
         }
     });
@@ -295,10 +295,9 @@ contract("DXdaoERC20StakingRewardsDistributionFactory", () => {
         await defaultRewardTokensValidatorInstance.setDxTokenRegistryListId(1, {
             from: ownerAddress,
         });
-        await defaultStakableTokensValidatorInstance.setDxTokenRegistryListId(
-            1,
-            { from: ownerAddress }
-        );
+        await swaprStakableTokensValidatorInstance.setDxTokenRegistryListId(1, {
+            from: ownerAddress,
+        });
         const { token0Address, token1Address } = getOrderedTokensInPair(
             firstStakableTokenInstance.address,
             secondStakableTokenInstance.address
