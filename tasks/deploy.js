@@ -75,17 +75,21 @@ task(
         );
 
         if (verify) {
+            await new Promise((resolve) => {
+                console.log("waiting");
+                setTimeout(resolve, 60000);
+            });
             if (withValidators) {
                 await hre.run("verify", {
                     address: rewardTokensValidator.address,
-                    constructorArguments: [
+                    constructorArgsParams: [
                         tokenRegistryAddress,
                         tokenRegistryListId,
                     ],
                 });
                 await hre.run("verify", {
                     address: stakableTokenValidator.address,
-                    constructorArguments: [
+                    constructorArgsParams: [
                         tokenRegistryAddress,
                         tokenRegistryListId,
                         factoryAddress,
@@ -94,7 +98,7 @@ task(
             }
             await hre.run("verify", {
                 address: factory.address,
-                constructorArguments: [
+                constructorArgsParams: [
                     rewardTokensValidator.address,
                     stakableTokenValidator.address,
                     erc20DistributionImplementation.address,
