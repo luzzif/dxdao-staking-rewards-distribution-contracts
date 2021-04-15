@@ -3359,9 +3359,9 @@ env-paths@^2.2.0:
   integrity sha512-6u0VYSCo/OW6IoD5WCLLy9JUGARbamfSavcNXry/eu8aHVFei6CD3Sw+VGX5alea1i9pgPHW0mbu6Xj0uBh7gA==
 
 erc20-staking-rewards-distribution-contracts@^0.11.4:
-  version "0.11.4"
-  resolved "https://registry.yarnpkg.com/erc20-staking-rewards-distribution-contracts/-/erc20-staking-rewards-distribution-contracts-0.11.4.tgz#ec3c6532d615bee221f08d071a2a33e0c4555cbd"
-  integrity sha512-kotBvSJFsoRut8zeiz1w5NXpjFk78GA1hxNOS6gd8iPJAHzPk9ey5BChHsgwsDJP9B4SQTf7IPCZi7XfijuEbw==
+  version "0.11.5"
+  resolved "https://registry.yarnpkg.com/erc20-staking-rewards-distribution-contracts/-/erc20-staking-rewards-distribution-contracts-0.11.5.tgz#239357b9ac20bc1eb62826668aacd3a943879ce3"
+  integrity sha512-Qhahv0DuOWwAvj62CyIi7uGTOVIh5OyUaKshaMmGdApbx2IOMsffRpVOj0FAkNqUynQt+XuYH7OaQutgx3bhCQ==
   dependencies:
     "@openzeppelin/contracts" "^4.0.0"
 
