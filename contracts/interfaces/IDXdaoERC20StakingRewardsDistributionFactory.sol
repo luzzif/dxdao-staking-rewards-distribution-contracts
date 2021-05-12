@@ -2,7 +2,7 @@
 
 pragma solidity >=0.8.0;
 
-import "erc20-staking-rewards-distribution-contracts/IERC20StakingRewardsDistributionFactory.sol";
+import "erc20-staking-rewards-distribution-contracts/interfaces/IERC20StakingRewardsDistributionFactory.sol";
 
 interface IDXdaoERC20StakingRewardsDistributionFactory is
     IERC20StakingRewardsDistributionFactory

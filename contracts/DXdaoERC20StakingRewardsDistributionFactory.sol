@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.4;
 
 import "erc20-staking-rewards-distribution-contracts/ERC20StakingRewardsDistributionFactory.sol";
 import "./interfaces/IRewardTokensValidator.sol";
