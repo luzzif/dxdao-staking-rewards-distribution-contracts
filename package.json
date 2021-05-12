@@ -20,7 +20,8 @@
         "postpack": "rimraf ./*.sol",
         "deploy:rinkeby:validators": "hardhat deploy --network rinkeby --verify --with-validators --token-registry-address 0x815d1b18f6baaeb3853b0f637475a5c2b28e2253 --token-registry-list-id 1 --factory-address 0x02f45e773436C6D96Cc73600fe94a660ec67734C",
         "deploy:rinkeby:no-validators": "hardhat deploy --network rinkeby --verify",
-        "deploy:arbitrum": "hardhat deploy --network arbitrumTestnetV3 --token-registry-address 0x9d6f6d86b81289e40e07fcda805c06f6e9b8f629 --token-registry-list-id 1 --factory-address 0xD020e922acB8e0235398Ec173654974eA1376c3A"
+        "deploy:arbitrum": "hardhat deploy --network arbitrumTestnetV3 --token-registry-address 0x9d6f6d86b81289e40e07fcda805c06f6e9b8f629 --token-registry-list-id 1 --factory-address 0xD020e922acB8e0235398Ec173654974eA1376c3A",
+        "deploy:xdai:no-validators": "hardhat deploy --network xdai --owner-address 0xe716ec63c5673b3a4732d22909b38d779fa47c3f"
     },
     "author": "Federico Luzzi <fedeluzzi00@gmail.com>",
     "license": "GPL-3.0",

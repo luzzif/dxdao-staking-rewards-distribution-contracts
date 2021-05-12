@@ -11,6 +11,7 @@ task(
         "The token registry list id to be used to validate tokens"
     )
     .addOptionalParam("factoryAddress", "The address of Swapr's pairs factory")
+    .addOptionalParam("ownerAddress", "The address of the owner")
     .addFlag(
         "verify",
         "Additional (and optional) Etherscan contracts verification"
@@ -22,6 +23,7 @@ task(
             factoryAddress,
             verify,
             withValidators,
+            ownerAddress,
         } = taskArguments;
 
         if (
@@ -73,6 +75,11 @@ task(
             stakableTokenValidator.address,
             erc20DistributionImplementation.address
         );
+
+        if (ownerAddress) {
+            await factory.transferOwnership(ownerAddress);
+            console.log(`ownership transferred to ${ownerAddress}`);
+        }
 
         if (verify) {
             await new Promise((resolve) => {

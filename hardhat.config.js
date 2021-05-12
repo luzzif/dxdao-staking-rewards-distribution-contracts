@@ -7,6 +7,9 @@ require("./tasks/deploy");
 
 const infuraId = process.env.INFURA_ID;
 
+/**
+ * @type import('hardhat/config').HardhatUserConfig
+ */
 module.exports = {
     networks: {
         mainnet: {
@@ -20,6 +23,12 @@ module.exports = {
             url: "https://kovan3.arbitrum.io/rpc",
             accounts: [process.env.PRIVATE_KEY],
             gasPrice: 0,
+        },
+        xdai: {
+            url: "https://rpc.xdaichain.com/",
+            accounts: [process.env.PRIVATE_KEY],
+            gasPrice: 1000000000,
+            timeout: 100000,
         },
     },
     solidity: {
