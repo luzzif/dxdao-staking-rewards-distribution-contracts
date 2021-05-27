@@ -104,6 +104,10 @@ task(
                 });
             }
             await hre.run("verify", {
+                address: erc20DistributionImplementation.address,
+                constructorArgsParams: [],
+            });
+            await hre.run("verify", {
                 address: factory.address,
                 constructorArgsParams: [
                     rewardTokensValidator.address,
