@@ -66,10 +66,12 @@ task(
         const ERC20StakingRewardsDistribution = hre.artifacts.require(
             "ERC20StakingRewardsDistribution"
         );
+        console.log("deploying implementation template");
         const erc20DistributionImplementation = await ERC20StakingRewardsDistribution.new();
         const DXdaoERC20StakingRewardsDistributionFactory = hre.artifacts.require(
             "DXdaoERC20StakingRewardsDistributionFactory"
         );
+        console.log("deploying factory");
         const factory = await DXdaoERC20StakingRewardsDistributionFactory.new(
             rewardTokensValidator.address,
             stakableTokenValidator.address,
@@ -77,6 +79,7 @@ task(
         );
 
         if (ownerAddress) {
+            console.log("transferring ownership to", ownerAddress);
             await factory.transferOwnership(ownerAddress);
             console.log(`ownership transferred to ${ownerAddress}`);
         }
