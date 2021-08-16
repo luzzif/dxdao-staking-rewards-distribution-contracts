@@ -19,8 +19,13 @@ module.exports = {
             url: `https://rinkeby.infura.io/v3/${infuraId}`,
             accounts: [process.env.PRIVATE_KEY],
         },
-        arbitrumTestnetV3: {
-            url: "https://kovan3.arbitrum.io/rpc",
+        arbitrumRinkebyTestnet: {
+            url: "https://rinkeby.arbitrum.io/rpc",
+            accounts: [process.env.PRIVATE_KEY],
+            gasPrice: 0,
+        },
+        arbitrumOne: {
+            url: "https://arb1.arbitrum.io/rpc",
             accounts: [process.env.PRIVATE_KEY],
             gasPrice: 0,
         },
